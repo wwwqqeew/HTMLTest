@@ -30,10 +30,16 @@
   bottom: 0;
   position: absolute;
   top: 50px;
-  width: 100%;
+  width: 50%;
   left: 0px;
 }
-
+.inner-right {
+  bottom: 0;
+  position: absolute;
+  top: 50px;
+  width: 50%;
+  right: 0px;
+}
 .inner-if {
   height: 99%;
   overflow: hidden;
@@ -69,41 +75,57 @@
 	<div class='main' style=''>
 		<div class='title'>
 			<input type="text" class="input-main" id="input-main">
-			<input class='baidu' type='button' value='百度'>
-			<input class='turn' type='button' value='执行'>
+			<input class='baidu' type='button' value='百度&&bing'>
+			<input class='turn' type='button' value='谷歌'>
 			<input class="clear" type='button' value="清空" >
 			<div class='viceIframe'></div>
 		</div>
 		<div class='inner-left inner-badu'>
-			
+			<iframe class='inner-if' src='https://www.baidu.com/'></iframe>
 		</div>
-
+		<div class='inner-right inner-bing'>
+			<iframe class='inner-if' src='http://cn.bing.com/?scope=web&FORM=QBRE'></iframe>
+		</div>
 	</div>
 
 <script type="text/javascript">
 (function($, exports) {
 
+	//基础添加Iframe
+	baseAdd = function(className,url){
+		var htmIframe = "<iframe class='inner-if' src='"+url+"'></iframe>";
+		$("."+className).empty().append(htmIframe);
+	};
+	
+	//基础添加Iframe BaiDu
+	baiduAdd = function(txt){
+		var url = "https://www.baidu.com/s?wd="+txt+"&rsv_spt=1&rsv_iqid=0xfd5c3231000afd26&issp=1&f=8&rsv_bp=0&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=0&rsv_sug3=4&rsv_sug1=4&rsv_sug7=101&inputT=1663&rsv_sug4=1938";
+		baseAdd("inner-badu",url);
+	};
+	
+	//基础添加Iframe Bing
+	bingAdd = function(txt){
+		var url = "http://cn.bing.com/search?q="+txt+"&qs=n&form=QBLH&pq="+txt+"&sc=8-4&sp=-1&sk=&cvid=E5990B455EBC413BA7C51D19407FEFEE";
+		baseAdd("inner-bing",url);
+	};
+	
+	allAdd = function(txt){
+		baiduAdd(txt);
+		bingAdd(txt);
+	};
+
 $(".baidu").click(function(){
 	var  dd = $("#input-main").val();
-	var htmBD = "<iframe class='inner-if' src='https://www.baidu.com/s?wd="+dd+"&rsv_spt=1&rsv_iqid=0xfd5c3231000afd26&issp=1&f=8&rsv_bp=0&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=0&rsv_sug3=4&rsv_sug1=4&rsv_sug7=101&inputT=1663&rsv_sug4=1938'></iframe>";
-
-	$(".inner-badu").empty().append(htmBD);
+	allAdd(dd);
 });
 
 $("#input-main").keyup(function() {
 	var  dd = $("#input-main").val();
-	var htmBD = "<iframe class='inner-if' src='https://www.baidu.com/s?wd="+dd+"&rsv_spt=1&rsv_iqid=0xfd5c3231000afd26&issp=1&f=8&rsv_bp=0&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=0&rsv_sug3=4&rsv_sug1=4&rsv_sug7=101&inputT=1663&rsv_sug4=1938'></iframe>";
-
-	$(".inner-badu").empty().append(htmBD);
-	
-
+	allAdd(dd);
 });
 
 $(".turn").click(function(){
-	var  dd = $("#input-main").val();
-	var htmBD = "<iframe class='inner-if' src='https://www.baidu.com/s?wd="+dd+"&rsv_spt=1&rsv_iqid=0xfd5c3231000afd26&issp=1&f=8&rsv_bp=0&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=0&rsv_sug3=4&rsv_sug1=4&rsv_sug7=101&inputT=1663&rsv_sug4=1938'></iframe>";
-
-	$(".inner-badu").empty().append(htmBD);
+	allAdd(dd);
 	var htmGG = "https://www.google.com.hk/webhp?hl=zh-CN&sa=X&ved=0ahUKEwjGt8nLirvNAhUIvY8KHZ64Al4QPAgD#newwindow=1&safe=strict&hl=zh-CN&q="+dd+"";
 	window.open(htmGG); 
 });
