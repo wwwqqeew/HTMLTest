@@ -78,6 +78,7 @@
 			<input class="clear" type='button' value="清空" >
 			<input class='turn' type='button' value='谷歌'>
 			<input class='baidu' type='button' value='百度&&bing'>
+			<input class='baiduFY' type='button' value='百度翻译'>
 			<div class='viceIframe'></div>
 		</div>
 		<div class='inner-left inner-badu'>
@@ -90,7 +91,16 @@
 
 <script type="text/javascript">
 (function($, exports) {
+	/**
+	alert("22");
+	var c = {};
+	var b = [];
+var d = //;
+var a = ();**/
 
+
+
+ 
 	//基础添加Iframe
 	baseAdd = function(className,url){
 		var htmIframe = "<iframe class='inner-if' src='"+url+"'></iframe>";
@@ -113,6 +123,11 @@
 		baiduAdd(txt);
 		bingAdd(txt);
 	};
+
+$(".baiduFY").click(function(){
+	var htmGG = "http://fanyi.baidu.com/translate?aldtype=16047&query=&keyfrom=baidu&smartresult=dict&lang=auto2zh#auto/zh/";
+	window.open(htmGG); 
+});
 
 $(".baidu").click(function(){
 	var  dd = $("#input-main").val();
