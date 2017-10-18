@@ -1,0 +1,333 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title> 车辆移动轨迹 </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+	<script src="jQueryRotate.2.2.js" type="text/javascript"></script>
+	<script src="RMap5.js" type="text/javascript"></script>
+	<style>
+	html,body{
+		width:100%;
+		height:100%;
+		margin:0;
+		padding:0;
+	}
+	.locus_contain2{
+		width: 100%;
+		height: 100%;
+	}
+
+	#map{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+	}
+	.playSchedule{
+		z-index: 99;
+		position: absolute;
+		bottom: 100px;
+		left: 50px;
+		width: 500px;
+	}
+	
+	.locusmap-his-button {
+		width: 100%;
+		background: black;
+		border: 0px;
+		cursor: pointer;
+		color: white;
+		font-size: 15px;
+		display: inline-block;
+		position: relative;
+		left: 5px;
+		height: 100%;
+		width: 90px;
+		line-height: 30px;
+		text-align: center;
+		border-radius: 5px;
+		margin-right: 10px;
+	}
+	</style>
+</head>
+
+<body>
+
+
+<div id="locus_contain2">
+	<div id='map'></div>
+</div>
+
+
+
+</body>
+
+<script type="text/javascript">
+	var Map;
+    var numMapLat = 28.662890625;
+    var numMapLng = 115.917578125;
+    var intMapZoom = 10;
+    
+    var getMapWidth = function () {
+        return $("#map").width();
+    };
+    var getMapHeight = function () {
+        return $("#map").height();
+    };
+    //地图初始化
+	 function inintMainMap() {
+            RMapConstant.MapMinLevel = 0;
+            RMapConstant.MapMaxLevel = 12;
+
+            $("#map").empty();
+            Map = new RMap("map", numMapLng, numMapLat, intMapZoom, getMapWidth(), getMapHeight());
+            Map.show();
+            ToolManager = new RToolManager(Map);
+            ToolManager.addScale(10, null, null, 23);
+            ToolManager.addZoomDirectBar($(window).width() - 80, 100);
+            $(window).resize(function () {
+                Map.resize(getMapWidth(), getMapHeight());
+                ToolManager.ZoomDirectBar.Div.set(getMapWidth() - 80, 100);
+            });
+        }
+	inintMainMap();
+	
+	//测试数据
+	window.data = [{ "longitude": 115.91869818649997, "latitude": 28.643892280999975, "name": "40" },
+{ "longitude": 115.91827865525003, "latitude": 28.643237593499983, "name": "42" },
+{ "longitude": 115.91869662399998, "latitude": 28.643990718499975, "name": "27" },
+{ "longitude": 115.91861224899998, "latitude": 28.643981343499977, "name": "26" },
+{ "longitude": 115.91899974899997, "latitude": 28.644265718499977, "name": "34" },
+{ "longitude": 115.91912162399997, "latitude": 28.644409468499976, "name": "35" },
+{ "longitude": 115.918924749, "latitude": 28.64507743724998, "name": "25" },
+{ "longitude": 115.9188450615, "latitude": 28.64516493724998, "name": "23" },
+{ "longitude": 115.9187731865, "latitude": 28.64525087474998, "name": "28" },
+{ "longitude": 115.9188700615, "latitude": 28.645461812249984, "name": "24" },
+{ "longitude": 115.9193106865, "latitude": 28.645432124749984, "name": "39" },
+{ "longitude": 115.919571624, "latitude": 28.645218062249985, "name": "32" },
+{ "longitude": 115.91963099899999, "latitude": 28.645485249749985, "name": "31" },
+{ "longitude": 115.91951068649999, "latitude": 28.645936812249985, "name": "29" },
+{ "longitude": 115.91944584274998, "latitude": 28.64733290599998, "name": "12" },
+{ "longitude": 115.91938646774997, "latitude": 28.64727040599998, "name": "11" },
+{ "longitude": 115.91932084274998, "latitude": 28.64723290599998, "name": "10" },
+{ "longitude": 115.91925834274997, "latitude": 28.64718290599998, "name": "9" },
+{ "longitude": 115.91919428024998, "latitude": 28.64715634349998, "name": "38" },
+{ "longitude": 115.91875053024998, "latitude": 28.64741728099998, "name": "21" },
+{ "longitude": 115.91870365524998, "latitude": 28.64738134349998, "name": "20" },
+{ "longitude": 115.91865678024998, "latitude": 28.64729228099998, "name": "19" },
+{ "longitude": 115.91860365524998, "latitude": 28.64725165599998, "name": "18" },
+{ "longitude": 115.91853959274998, "latitude": 28.64719071849998, "name": "17" },
+{ "longitude": 115.91842865524998, "latitude": 28.647173530999982, "name": "16" },
+{ "longitude": 115.91834271774998, "latitude": 28.64712353099998, "name": "15" },
+{ "longitude": 115.91889428024999, "latitude": 28.64781571849998, "name": "8" },
+{ "longitude": 115.91885990524999, "latitude": 28.64795946849998, "name": "7" },
+{ "longitude": 115.91881615524998, "latitude": 28.64792040599998, "name": "22" },
+{ "longitude": 115.91985287399997, "latitude": 28.662117280999976, "name": "X" },
+{ "longitude": 115.91981849899997, "latitude": 28.662303218499975, "name": "9" },
+{ "longitude": 115.91966224899997, "latitude": 28.662315718499976, "name": "8" },
+{ "longitude": 115.91960131149997, "latitude": 28.662450093499977, "name": "7" },
+{ "longitude": 115.91949037399998, "latitude": 28.662445405999975, "name": "6" },
+{ "longitude": 115.91944506149997, "latitude": 28.662517280999975, "name": "5" },
+{ "longitude": 115.91939349899998, "latitude": 28.662564155999977, "name": "4" },
+{ "longitude": 115.91927162399998, "latitude": 28.662736030999977, "name": "3" },
+{ "longitude": 115.91922474899997, "latitude": 28.662801655999978, "name": "Ⅱ" },
+{ "longitude": 115.91916849899997, "latitude": 28.662993843499976, "name": "Ⅰ" },
+{ "longitude": 115.91911381149997, "latitude": 28.66419228099998, "name": "11" },
+{ "longitude": 115.91906849899996, "latitude": 28.66442509349998, "name": "12" },
+{ "longitude": 115.91899818649996, "latitude": 28.66451884349998, "name": "13" },
+{ "longitude": 115.91893412399996, "latitude": 28.66457509349998, "name": "14" },
+{ "longitude": 115.91975443649996, "latitude": 28.66482821849998, "name": "检1" },
+{ "longitude": 115.91983724899995, "latitude": 28.66512040599998, "name": "检2" },
+{ "longitude": 115.91991068649996, "latitude": 28.66518603099998, "name": "检3" },
+{ "longitude": 115.92001224899995, "latitude": 28.66522665599998, "name": "检4" },
+{ "longitude": 115.92009818649996, "latitude": 28.665415718499982, "name": "检5" },
+{ "longitude": 115.91894193649998, "latitude": 28.666086030999978, "name": "15" }];
+
+	
+	//c车辆移动
+	
+	var run = function(timeSpeed,allData){
+		//车辆速度
+		 this.timeSpeed = timeSpeed;
+		 this.payCount = 0;
+		 this.allData = allData;
+		 this.reSetLine = function () {
+            var d = this.allData;
+            var arr = [];
+            for (var i = 0; i < d.length; i++) {
+                if (i == 0) {//第一次循环，定位到地图中心点
+                    var item = d[i];
+                    Map.setCenter(item.longitude, item.latitude);
+                }
+                var tm = {};
+                tm.Cx = d[i].longitude;
+                tm.Cy = d[i].latitude;
+                tm.index = i;
+               
+                arr.push(tm);
+            }
+
+			this.lineArr=arr;
+            this.drawLine(arr); //画线
+            this.addMarker(item.longitude, item.latitude);
+            this.initRightPart();
+            this.play();
+       };
+		//画红线
+       this.drawLine = function (runData) {
+            var lineData = runData;
+            
+            Map.rline = new RLine(runData, 4, "red", 0.8);
+            Map.addGraphics(Map.rline);
+            Map.refreshGraphics(Map.rline);
+            
+            this.line = Map.rline;
+       };
+		//画蓝线
+	    this.drawBlueLine = function (runData) {
+			if(this.blueline){
+				Map.removeGraphics(this.blueline);
+			}
+
+            var lineData = runData;
+            
+            Map.blueline = new RLine(runData, 4, "blue", 0.8);
+            Map.addGraphics(Map.blueline);
+            Map.refreshGraphics(Map.blueline);
+            
+            this.blueline = Map.blueline;
+       };
+	   //添加标注
+       this.addMarker = function (lng, lat) {
+        	 this.marker = new RTabMarker(lng, lat, {html: "<div class='car-flag'><div/>",detaX: 0,detaY: 0 }, "./img/green-car.png", -10, -7, 16,32);
+        	 Map.addMarker(this.marker);
+			 this.marker.showLabel();
+        };
+       //初始化操作按钮
+        this.initRightPart = function () {//右边部分的html处理
+            $("body").append('<div class="playSchedule">' 
+           				 + '<div class="locusmap-his-button" id="restart-pause">开始动画</div>'
+						 + '<div class="locusmap-his-button" id="temp-stop">暂停动画</div>'
+						 + '<div class="locusmap-his-button" id="continue-pause">继续动画</div>'
+						 + '<div class="locusmap-his-button" id="btn_stop">停止动画</div>'
+						 + '</div>'
+						 + '');
+            this.initRightPartEven();
+           
+            this.Map = Map;
+         
+        },
+        this.initRightPartEven = function () {//初始化事件
+            this.rightPart_up(); //上部数据显示
+        };
+        this.rightPart_up = function () {
+        	var that = this;
+           //开始动画
+            $("#restart-pause").click(function () {
+                if (that.timeInterval)
+                    clearInterval(that.timeInterval);
+                that.payCount = 0;
+                that.play();
+            });
+            
+            //暂停
+            $("#temp-stop").click(function () {
+                if (that.timeInterval)
+                    clearInterval(that.timeInterval);
+            });
+            
+           //继续播放
+           $("#continue-pause").click(function () {
+                if (that.timeInterval)
+                    clearInterval(that.timeInterval);
+                    if(that.payCount!=0){
+		                that.play();
+                    }
+            });
+          
+            //停止
+            $("#btn_stop").click(function () {
+                 that.payCount = 0; //重设播放进度
+	            if (that.timeInterval) {//清除定时器
+	                clearInterval(that.timeInterval);
+	            }
+            });
+        };
+		
+         this.play = function (runData) {//播放
+			//判断是否在移动
+            if (this.timeInterval) {
+                clearInterval(this.timeInterval);
+            }
+            if (runData) {
+                this.payCount = 0;
+            }
+            var that = this;
+            var data = runData || this.allData;
+            this.timeInterval = setInterval(function () {
+                if (that.payCount == data.length) {
+                    that.payCount = 0;
+                    clearInterval(that.timeInterval);
+					that.drawBlueLine(that.lineArr);
+                }else{
+					that.drawBlueLine(that.lineArr.slice(0,that.payCount));
+	                that.UpDateMarker(data);
+	                that.payCount++;
+                }
+            }, this.timeSpeed);
+        };
+		//更新标注
+        this.UpDateMarker = function (runData) {
+            var data = runData || this.allData;
+            try {
+                var lng = data[this.payCount].longitude;
+                var lat = data[this.payCount].latitude;
+                var p = this.marker;
+                p.update(lng, lat, p.TagObject, p.IconUrl, p.DetaX, p.DetaY, p.IconWidth, p.IconHeight);
+				var marker = $(".car-flag").parent().parent();
+				var angel = this.getAngel(data[this.payCount-1],data[this.payCount]);
+				marker.find("img").rotate(angel);
+            }
+            catch (e) {
+            }
+        };
+		//计算两点之前的角度
+		this.getAngel = function(point1 , point2){
+	    	var diff_x = point2.longitude - point1.longitude,
+		    	diff_y = point2.latitude - point1.latitude;
+		    //返回角度,不是弧度
+		   
+		    var angle = 360*Math.atan(diff_y/diff_x)/(2*Math.PI);
+		   
+		    
+			if ((diff_x >= 0 && diff_y >= 0)||(diff_x >= 0 &&  diff_y <= 0)) {
+		    	//东北象限
+		    	angle = 90 - angle;
+		    }else{
+		    	//西南象限
+		    	angle = 270 - angle;
+		    }
+		    return (parseInt(angle) == 0 ? 360:parseInt(angle));
+	    }
+       this.init = function(){
+       	this.reSetLine();
+       }
+       
+       this.init();
+	}
+	
+	run(500,window.data);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</script>
+</html>

@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title> Map Test </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<script src="jquery-1.9.0.js" type="text/javascript"></script>
+
+	<script src="RMap5.js" type="text/javascript"></script>
+	
+	
+	<style>
+	html,body{
+		width:100%;
+		height:100%;
+		margin:0;
+		padding:0;
+	}
+	</style>
+</head>
+
+<body>
+<div id="left" style="float:left;height:70%;width:5%;background-color:#00FFFF;"></div>
+<div id="mapdiv" style="float:left;height:95%;width:45%;"></div>
+<div id="mapdiv1" style="float:right;height:95%;width:45%;"></div>
+<script language="JavaScript">
+
+
+
+
+$(document).ready(function(){ 
+
+	 //创建一个RMap对象
+	var map = new RMap(document.getElementById("mapdiv"), 119.939869,31.629542, 7, $('#mapdiv').width(), $('#mapdiv').height());
+	//显示地图
+	map.show();
+	map.mName = "m11";
+
+	 new RPolyline ([{Cx:119.949869,Cy:31.629542},{Cx:119.939869,Cy:31.629542}], 1,  "#FF0000", 1, 1 )
+	//将图形添加到地图
+	map.addGraphics(RPolyline)
+
+
+	var map1 = new RMap(document.getElementById("mapdiv1"), 119.939869,31.629542, 7, $('#mapdiv1').width(), 
+	$('#mapdiv1').height());
+	$("#mapdiv1 div[_rmap='map']").css({position:"relative"});
+	//显示地图
+	map1.show();
+	map1.mName = "m22";
+
+	//map1.addLayer();
+
+	//地图对象互相绑定
+	map1.otherMap =  map;
+	map.otherMap =  map1;
+
+//	map1.setCenter(115, 40);
+
+	//双地图移动
+    mapMove = function(e){
+		var thisCenter = this.getCenter();
+		var otherCenter = this.otherMap.getCenter();
+		if(thisCenter.lat != otherCenter.lat || thisCenter.lng != otherCenter.lng){
+			this.otherMap.smoothMap( thisCenter.lng, thisCenter.lat );
+			this.otherMap.refresh();
+		};
+	}
+
+	//等级改变
+    mapLeaveChange = function(e){
+		//移除等级改变联动，防止无限改变
+		this.otherMap.removeEventListener( "MapLevelChangedEvent", mapLeaveChange);
+
+		//等级改变
+		var thisLevel = this.getLevel();
+		var otherLevel = this.otherMap.getLevel();
+		if(thisLevel != otherLevel ){
+			this.otherMap.setLevel(thisLevel);
+		};
+
+		var thisCenter = this.getCenter();
+		var otherCenter = this.otherMap.getCenter();
+		if(thisCenter.lat != otherCenter.lat || thisCenter.lng != otherCenter.lng){
+			this.otherMap.smoothMap( thisCenter.lng, thisCenter.lat );
+		};
+		this.otherMap.refresh();
+		this.otherMap.addEventListener( "MapLevelChangedEvent", mapLeaveChange );
+	}
+
+	//双地图移动事件添加
+	map.addEventListener( "MapMouseUpEvent", mapMove );
+	map1.addEventListener( "MapMouseUpEvent", mapMove );
+
+	//双地图等级改变添加
+	map.addEventListener( "MapLevelChangedEvent", mapLeaveChange );
+	map1.addEventListener( "MapLevelChangedEvent", mapLeaveChange );
+
+
+	
+});
+
+</script>
+</body>
+</html>

@@ -91,11 +91,12 @@
 
 <script type="text/javascript">
 (function($, exports) {
+	/**
 	alert("22");
 	var c = {};
 	var b = [];
 var d = //;
-var a = ();
+var a = ();**/
 
 
 
@@ -148,6 +149,30 @@ $(".turn").click(function(){
 $(".clear").click(function(){
 	$("#input-main").val("")
 });
+
+var _url =  "https://api.douban.com/v2/book/isbn/97871212913232";
+
+$.ajax({
+        url: _url,
+        type: 'GET',
+        timeout: 2000,
+        dataType: 'jsonp',
+		success : function(data) {
+				alert(data);
+			}
+    })
+    .done(function(e) {
+		//debugger;
+        console.log("success");
+    })
+    .fail(function(e) {
+		//debugger;
+		alert("获取错误");
+        console.log("error");
+    }).always(function(e){
+		//debugger;
+        console.log("always");
+    });
 
 })(jQuery, window);
 </script>

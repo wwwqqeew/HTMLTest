@@ -1,0 +1,3 @@
+http://localhost:8088/JLTMService/service/BaseService?action=driving&userid=test&password=test&slng=113.381641&slat=23.1294571&elng=113.388694&elat=23.17169
+
+http://localhost:8088/JLTMService/service/BaseService?action=driving&userid=test&password=test&slng=113.3741196155&slat=23.1246373718&elng=113.3823496224&elat=23.1656169488

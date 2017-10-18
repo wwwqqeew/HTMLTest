@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>车辆路线 </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<script src="jquery-1.9.0.js"  type="text/javascript"></script>
+	<script src="RMap5.js" type="text/javascript"></script>
+	<style>
+	html,body{
+		width:100%;
+		height:100%;
+		margin:0;
+		padding:0;
+	}
+	.locus_contain2{
+		width: 100%;
+		height: 100%;
+	}
+
+	#map{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+	}
+	.playSchedule{
+		z-index: 99;
+		position: absolute;
+		bottom: 100px;
+		left: 50px;
+		width: 500px;
+	}
+	
+	.locusmap-his-button {
+		width: 100%;
+		background: black;
+		border: 0px;
+		cursor: pointer;
+		color: white;
+		font-size: 15px;
+		display: inline-block;
+		position: relative;
+		left: 5px;
+		height: 100%;
+		width: 90px;
+		line-height: 30px;
+		text-align: center;
+		border-radius: 5px;
+		margin-right: 10px;
+	}
+	</style>
+</head>
+
+<body>
+
+
+<div id="locus_contain2">
+	<div id='map'></div>
+</div>
+
+
+
+</body>
+
+<script type="text/javascript">
+	var Map;
+    var numMapLat = 28.662890625;
+    var numMapLng = 115.917578125;
+    var intMapZoom = 10;
+    var arr = [];
+    var arr2 =[];
+	var start1,start2,end1,end2;//计划出发点，实际出发点，计划终点，实际终点
+	var mk;
+    var getMapWidth = function () {
+        return $("#map").width();
+    };
+    var getMapHeight = function () {
+        return $("#map").height();
+    };
+    //初始化地图
+	 function inintMainMap() {
+            RMapConstant.MapMinLevel = 0;
+            RMapConstant.MapMaxLevel = 12;
+
+            $("#map").empty();
+            Map = new RMap("map", numMapLng, numMapLat, intMapZoom, getMapWidth(), getMapHeight());
+            Map.show();
+            ToolManager = new RToolManager(Map);
+            ToolManager.addScale(10, null, null, 23);
+            ToolManager.addZoomDirectBar($(window).width() - 80, 100);
+            $(window).resize(function () {
+                Map.resize(getMapWidth(), getMapHeight());
+                ToolManager.ZoomDirectBar.Div.set(getMapWidth() - 80, 100);
+            });
+        }
+	inintMainMap();
+	
+	window.data = [{ "longitude": 113.38797, "latitude": 23.126811, "name": "40" },{ "longitude": 113.38793, "latitude": 23.126351, "name": "40" },{ "longitude": 113.38792, "latitude": 23.126151, "name": "40" },{ "longitude": 113.38791, "latitude": 23.126011, "name": "40" },{ "longitude": 113.38789, "latitude": 23.125731, "name": "40" },{ "longitude": 113.38786, "latitude": 23.125251, "name": "40" },{ "longitude": 113.38786, "latitude": 23.125101, "name": "40" }];
+window.data = [{ "longitude": 113.38786, "latitude": 23.125101, "name": "40" },{ "longitude": 113.38762, "latitude": 23.125121, "name": "40" },{ "longitude": 113.3868, "latitude": 23.125201, "name": "40" },{ "longitude": 113.38675, "latitude": 23.125201, "name": "40" },{ "longitude": 113.38657, "latitude": 23.125221, "name": "40" },{ "longitude": 113.38629, "latitude": 23.125251, "name": "40" },{ "longitude": 113.3862, "latitude": 23.125261, "name": "40" },{ "longitude": 113.38615, "latitude": 23.125261, "name": "40" },{ "longitude": 113.38604, "latitude": 23.125271, "name": "40" },{ "longitude": 113.385731, "latitude": 23.125301, "name": "40" },{ "longitude": 113.384681, "latitude": 23.125401, "name": "40" },{ "longitude": 113.384511, "latitude": 23.125421, "name": "40" },{ "longitude": 113.384301, "latitude": 23.125441, "name": "40" },{ "longitude": 113.384211, "latitude": 23.125451, "name": "40" },{ "longitude": 113.383951, "latitude": 23.125481, "name": "40" },{ "longitude": 113.383881, "latitude": 23.125491, "name": "40" },{ "longitude": 113.383721, "latitude": 23.125511, "name": "40" },{ "longitude": 113.383151, "latitude": 23.125571, "name": "40" },{ "longitude": 113.382971, "latitude": 23.125601, "name": "40" },{ "longitude": 113.382211, "latitude": 23.125641, "name": "40" },{ "longitude": 113.381781, "latitude": 23.125691, "name": "40" },{ "longitude": 113.381572, "latitude": 23.125701, "name": "40" },{ "longitude": 113.381312, "latitude": 23.125721, "name": "40" },{ "longitude": 113.381172, "latitude": 23.125741, "name": "40" },{ "longitude": 113.380202, "latitude": 23.125851, "name": "40" },{ "longitude": 113.379902, "latitude": 23.125891, "name": "40" },{ "longitude": 113.379792, "latitude": 23.125911, "name": "40" },{ "longitude": 113.379512, "latitude": 23.125951, "name": "40" },{ "longitude": 113.379362, "latitude": 23.125981, "name": "40" },{ "longitude": 113.379252, "latitude": 23.126011, "name": "40" },{ "longitude": 113.379172, "latitude": 23.126031, "name": "40" },{ "longitude": 113.378972, "latitude": 23.126071, "name": "40" },{ "longitude": 113.378762, "latitude": 23.126131, "name": "40" },{ "longitude": 113.378533, "latitude": 23.126181, "name": "40" },{ "longitude": 113.377973, "latitude": 23.126361, "name": "40" },{ "longitude": 113.377893, "latitude": 23.126391, "name": "40" },{ "longitude": 113.377743, "latitude": 23.126451, "name": "40" },{ "longitude": 113.377633, "latitude": 23.126491, "name": "40" },{ "longitude": 113.377403, "latitude": 23.126581, "name": "40" },{ "longitude": 113.376623, "latitude": 23.126971, "name": "40" },{ "longitude": 113.376183, "latitude": 23.127191, "name": "40" }];
+window.data = [{ "longitude": 113.376183, "latitude": 23.127191, "name": "40" },{ "longitude": 113.37605, "latitude": 23.127281, "name": "40" },{ "longitude": 113.37586, "latitude": 23.127391, "name": "40" },{ "longitude": 113.37582, "latitude": 23.127431, "name": "40" },{ "longitude": 113.37579, "latitude": 23.127471, "name": "40" },{ "longitude": 113.37578, "latitude": 23.127501, "name": "40" },{ "longitude": 113.37576, "latitude": 23.127531, "name": "40" },{ "longitude": 113.37574, "latitude": 23.127571, "name": "40" },{ "longitude": 113.37573, "latitude": 23.127621, "name": "40" },{ "longitude": 113.37573, "latitude": 23.127651, "name": "40" },{ "longitude": 113.375721, "latitude": 23.127691, "name": "40" },{ "longitude": 113.375711, "latitude": 23.127741, "name": "40" },{ "longitude": 113.375701, "latitude": 23.127811, "name": "40" },{ "longitude": 113.375841, "latitude": 23.128471, "name": "40" },{ "longitude": 113.375891, "latitude": 23.128671, "name": "40" },{ "longitude": 113.375911, "latitude": 23.128771, "name": "40" },{ "longitude": 113.375941, "latitude": 23.128891, "name": "40" },{ "longitude": 113.376011, "latitude": 23.129191, "name": "40" },{ "longitude": 113.376031, "latitude": 23.12925, "name": "40" },{ "longitude": 113.376021, "latitude": 23.129331, "name": "40" },{ "longitude": 113.376011, "latitude": 23.12939, "name": "40" }];
+window.data = [{ "longitude": 113.376011, "latitude": 23.12939, "name": "40" },{ "longitude": 113.37606, "latitude": 23.129591, "name": "40" },{ "longitude": 113.37624, "latitude": 23.130311, "name": "40" },{ "longitude": 113.37633, "latitude": 23.130691, "name": "40" },{ "longitude": 113.37649, "latitude": 23.131351, "name": "40" },{ "longitude": 113.37671, "latitude": 23.132251, "name": "40" },{ "longitude": 113.37674, "latitude": 23.132431, "name": "40" },{ "longitude": 113.37675, "latitude": 23.132471, "name": "40" },{ "longitude": 113.37678, "latitude": 23.132681, "name": "40" },{ "longitude": 113.37678, "latitude": 23.132751, "name": "40" },{ "longitude": 113.37679, "latitude": 23.132831, "name": "40" },{ "longitude": 113.37677, "latitude": 23.133121, "name": "40" },{ "longitude": 113.37673, "latitude": 23.133401, "name": "40" },{ "longitude": 113.37668, "latitude": 23.133641, "name": "40" },{ "longitude": 113.37663, "latitude": 23.133801, "name": "40" },{ "longitude": 113.37659, "latitude": 23.133951, "name": "40" },{ "longitude": 113.376521, "latitude": 23.134131, "name": "40" },{ "longitude": 113.376391, "latitude": 23.134421, "name": "40" },{ "longitude": 113.376251, "latitude": 23.134761, "name": "40" },{ "longitude": 113.376181, "latitude": 23.134961, "name": "40" }];
+window.data = [{ "longitude": 113.376181, "latitude": 23.134961, "name": "40" },{ "longitude": 113.37615, "latitude": 23.135021, "name": "40" },{ "longitude": 113.37607, "latitude": 23.135331, "name": "40" },{ "longitude": 113.37606, "latitude": 23.135451, "name": "40" },{ "longitude": 113.37607, "latitude": 23.135811, "name": "40" },{ "longitude": 113.37608, "latitude": 23.135951, "name": "40" },{ "longitude": 113.37622, "latitude": 23.136691, "name": "40" },{ "longitude": 113.37634, "latitude": 23.137151, "name": "40" },{ "longitude": 113.37644, "latitude": 23.137571, "name": "40" },{ "longitude": 113.37652, "latitude": 23.138001, "name": "40" },{ "longitude": 113.37663, "latitude": 23.138381, "name": "40" },{ "longitude": 113.37671, "latitude": 23.138731, "name": "40" },{ "longitude": 113.37675, "latitude": 23.138891, "name": "40" },{ "longitude": 113.3768, "latitude": 23.139061, "name": "40" },{ "longitude": 113.37692, "latitude": 23.139551, "name": "40" },{ "longitude": 113.37732, "latitude": 23.141231, "name": "40" },{ "longitude": 113.37756, "latitude": 23.142251, "name": "40" },{ "longitude": 113.37768, "latitude": 23.142731, "name": "40" },{ "longitude": 113.37795, "latitude": 23.143671, "name": "40" },{ "longitude": 113.378, "latitude": 23.143811, "name": "40" },{ "longitude": 113.37809, "latitude": 23.144111, "name": "40" },{ "longitude": 113.37811, "latitude": 23.144171, "name": "40" },{ "longitude": 113.37846, "latitude": 23.144971, "name": "40" },{ "longitude": 113.37856, "latitude": 23.145201, "name": "40" }];
+window.data = [{ "longitude": 113.37856, "latitude": 23.145201, "name": "40" },{ "longitude": 113.37866, "latitude": 23.145541, "name": "40" },{ "longitude": 113.37869, "latitude": 23.145681, "name": "40" },{ "longitude": 113.37873, "latitude": 23.146211, "name": "40" },{ "longitude": 113.37871, "latitude": 23.146951, "name": "40" },{ "longitude": 113.3787, "latitude": 23.147471, "name": "40" },{ "longitude": 113.3787, "latitude": 23.147551, "name": "40" },{ "longitude": 113.37868, "latitude": 23.148471, "name": "40" },{ "longitude": 113.3787, "latitude": 23.149011, "name": "40" },{ "longitude": 113.37876, "latitude": 23.149441, "name": "40" },{ "longitude": 113.3788, "latitude": 23.149611, "name": "40" },{ "longitude": 113.37924, "latitude": 23.150791, "name": "40" },{ "longitude": 113.37937, "latitude": 23.151071, "name": "40" },{ "longitude": 113.37991, "latitude": 23.151881, "name": "40" },{ "longitude": 113.37998, "latitude": 23.151971, "name": "40" },{ "longitude": 113.38009, "latitude": 23.152141, "name": "40" },{ "longitude": 113.38019, "latitude": 23.152281, "name": "40" },{ "longitude": 113.38072, "latitude": 23.153081, "name": "40" },{ "longitude": 113.38157, "latitude": 23.154331, "name": "40" },{ "longitude": 113.38169, "latitude": 23.154511, "name": "40" },{ "longitude": 113.38184, "latitude": 23.154771, "name": "40" },{ "longitude": 113.38197, "latitude": 23.155051, "name": "40" },{ "longitude": 113.38208, "latitude": 23.155291, "name": "40" },{ "longitude": 113.38218, "latitude": 23.155591, "name": "40" },{ "longitude": 113.38228, "latitude": 23.156011, "name": "40" },{ "longitude": 113.38234, "latitude": 23.156481, "name": "40" },{ "longitude": 113.38233, "latitude": 23.157411, "name": "40" },{ "longitude": 113.38228, "latitude": 23.158551, "name": "40" },{ "longitude": 113.38227, "latitude": 23.158881, "name": "40" },{ "longitude": 113.38228, "latitude": 23.159321, "name": "40" },{ "longitude": 113.38227, "latitude": 23.159501, "name": "40" },{ "longitude": 113.38227, "latitude": 23.159641, "name": "40" },{ "longitude": 113.38229, "latitude": 23.161391, "name": "40" },{ "longitude": 113.3823, "latitude": 23.161661, "name": "40" },{ "longitude": 113.3823, "latitude": 23.161701, "name": "40" },{ "longitude": 113.3823, "latitude": 23.161901, "name": "40" },{ "longitude": 113.3823, "latitude": 23.164461, "name": "40" },{ "longitude": 113.382261, "latitude": 23.164891, "name": "40" },{ "longitude": 113.382241, "latitude": 23.165241, "name": "40" },{ "longitude": 113.382231, "latitude": 23.165321, "name": "40" },{ "longitude": 113.382231, "latitude": 23.165371, "name": "40" },{ "longitude": 113.382221, "latitude": 23.165441, "name": "40" },{ "longitude": 113.382211, "latitude": 23.165521, "name": "40" },{ "longitude": 113.382211, "latitude": 23.165641, "name": "40" },{ "longitude": 113.382211, "latitude": 23.165701, "name": "40" },{ "longitude": 113.382251, "latitude": 23.166181, "name": "40" }];
+window.data = [{ "longitude": 113.382251, "latitude": 23.166181, "name": "40" },{ "longitude": 113.3825, "latitude": 23.166671, "name": "40" },{ "longitude": 113.38263, "latitude": 23.167071, "name": "40" },{ "longitude": 113.38265, "latitude": 23.16714, "name": "40" },{ "longitude": 113.38273, "latitude": 23.16748, "name": "40" },{ "longitude": 113.38292, "latitude": 23.168501, "name": "40" }];
+window.data = [{ "longitude": 113.38292, "latitude": 23.168501, "name": "40" },{ "longitude": 113.38304, "latitude": 23.16847, "name": "40" },{ "longitude": 113.38386, "latitude": 23.168341, "name": "40" },{ "longitude": 113.38462, "latitude": 23.168251, "name": "40" },{ "longitude": 113.38505, "latitude": 23.168231, "name": "40" },{ "longitude": 113.3853, "latitude": 23.168221, "name": "40" },{ "longitude": 113.38571, "latitude": 23.168211, "name": "40" },{ "longitude": 113.38675, "latitude": 23.168171, "name": "40" },{ "longitude": 113.38731, "latitude": 23.168151, "name": "40" },{ "longitude": 113.38942, "latitude": 23.168091, "name": "40" },{ "longitude": 113.38964, "latitude": 23.168091, "name": "40" },{ "longitude": 113.38992, "latitude": 23.168081, "name": "40" },{ "longitude": 113.39205, "latitude": 23.168031, "name": "40" },{ "longitude": 113.39293, "latitude": 23.167921, "name": "40" },{ "longitude": 113.39375, "latitude": 23.167741, "name": "40" },{ "longitude": 113.39379, "latitude": 23.167851, "name": "40" }];
+window.data = [{ "longitude": 113.39379, "latitude": 23.167851, "name": "40" },{ "longitude": 113.39295, "latitude": 23.16803, "name": "40" },{ "longitude": 113.39206, "latitude": 23.16815, "name": "40" },{ "longitude": 113.38976, "latitude": 23.1682, "name": "40" }];
+window.data = [{ "longitude": 113.38976, "latitude": 23.1682, "name": "40" },{ "longitude": 113.39014, "latitude": 23.16842, "name": "40" },{ "longitude": 113.39245, "latitude": 23.16975, "name": "40" },{ "longitude": 113.39267, "latitude": 23.16987, "name": "40" },{ "longitude": 113.3929, "latitude": 23.16987, "name": "40" },{ "longitude": 113.39343, "latitude": 23.16967, "name": "40" },{ "longitude": 113.39422, "latitude": 23.16966, "name": "40" }];
+
+
+	//计划路线
+	 window.data = [{ "longitude": 115.9184479596, "latitude": 28.6425262863, "name": "40" },
+	{ "longitude": 115.9221101610, "latitude":28.6469114985, "name": "40" },
+	{ "longitude": 115.9247908817, "latitude":28.6518986243, "name": "40" },
+	{ "longitude": 115.9252228817, "latitude":28.6545926243,"name": "42" },
+	{ "longitude": 115.9256538817, "latitude":28.6568746243,"name": "42" }
+	]; 
+	//实际路线
+	window.data2 = [{ "longitude": 115.9184479596, "latitude": 28.6425262863, "name": "40" },
+	{ "longitude": 115.9221101610, "latitude":28.6469114985, "name": "40" },
+	{ "longitude": 115.9344472562 , "latitude":28.6434493968,"name": "40" },
+	{ "longitude": 115.9351122562, "latitude":28.6467333968,"name": "40" },
+	{ "longitude": 115.9387176978 , "latitude":28.6524144111,"name": "40" },
+	{ "longitude": 115.9322715977 , "latitude":28.6542685270,"name": "40" },
+	{ "longitude": 115.9292535977,"latitude":28.6547435270,"name": "40" },
+	{ "longitude": 115.9252228817, "latitude":28.6545926243,"name": "42" },
+	{ "longitude": 115.9256538817, "latitude":28.6568746243,"name": "42" },
+	{ "longitude": 115.9273833409, "latitude":28.6598575382,"name": "42" }];
+	//车辆路线
+	var carLine = function(timeSpeed,allData){
+		 this.timeSpeed = timeSpeed;
+		 this.payCount = 0;
+		 this.allData = allData;
+		 //添加路线
+		 this.reSetLine = function () {
+            var d = this.allData;
+            for (var i = 0; i < d.length; i++) {
+                if (i == 0) {//第一次循环，定位到地图中心点
+                    var item = d[i];
+                    start1 = d[i];
+                    Map.setCenter(item.longitude, item.latitude);
+                }
+                if(i==d.length-1){
+                	end1 = d[i];
+                }
+                var tm = {};
+                var tm2 = {};
+                tm.Cx = d[i].longitude;
+                tm.Cy = d[i].latitude;
+                tm.index = i;
+               
+                arr.push(tm);
+                
+            }
+			d = [];
+			d= window.data2;
+			for (var i = 0; i < d.length; i++) {
+                if (i == 0) {//第一次循环，定位到地图中心点
+                    var item = d[i];
+                    start2 = d[i];
+                    Map.setCenter(item.longitude, item.latitude);
+                }
+                if(i==d.length-1){
+                	end2 = d[i];
+                }                
+                var tm = {};
+                var tm2 = {};
+                tm.Cx = d[i].longitude;
+                tm.Cy = d[i].latitude;
+                tm.index = i;
+               
+                arr2.push(tm);
+            }
+       };
+       //画计划路线
+       this.drawLine = function (runData) {
+            
+            Map.rline = new RLine(runData, 4, "green", 0.8);
+            Map.addGraphics(Map.rline);
+            Map.refreshGraphics(Map.rline);
+            
+       };
+		//画实际路线
+	    this.drawBlueLine = function (runData) {
+            Map.blueline = new RLine(runData, 4, "blue", 0.8);
+            Map.addGraphics(Map.blueline);
+            Map.refreshGraphics(Map.blueline);
+            
+       };
+	   //画起点终点标注
+       this.addMarker = function(marker,status) {
+	   //判断标注状态，设置标注
+				var img = "./img/visited_stops.png";
+				var address = "";
+				if(status==1){
+					address="计划出发点";
+					img = "./img/start.png";
+				}else if(status==0){
+					address="计划终点";
+					img = "./img/end.png";
+				}else if(status==2){
+					address="实际出发点";
+					img = "./img/start.png";
+				}else if(status==3){
+					address="实际终点";
+					img = "./img/end.png";
+				}
+				this.marker = new RTabMarker(marker.longitude, marker.latitude, {html: "",detaX: 0,detaY: 0 }, img, -15, -40, 30,40);
+				//添加标注
+				Map.addMarker(this.marker);
+				//显示label框
+				this.marker.showLabel();
+				mk = this.marker;
+			};
+			//初始化操作按钮
+		this.initRightPart = function () {//右边部分的html处理
+            $("body").append('<div class="playSchedule">' 
+           				 + '<div class="locusmap-his-button" id="plan-line">计划路线</div>'
+						 + '<div class="locusmap-his-button" id="real-line">实际路线</div>'
+						 + '<div class="locusmap-his-button" id="both-line">路线比较</div>'
+						 + '<div class="locusmap-his-button" id="clear-line">清除路线</div>'
+						 + '</div>'
+						 + '');
+            this.initRightPartEven();
+           
+            this.Map = Map;
+         
+        },
+        this.initRightPartEven = function () {//初始化事件
+            this.rightPart_up(); //上部数据显示
+        };
+		//按钮操作
+        this.rightPart_up = function () {
+        	var that = this;
+           //计划路线
+            $("#plan-line").click(function () {
+				//移除所有图形
+				Map.removeAllGraphics();
+				//移除所有标注
+				Map.removeAllMarker();
+				//重新绘制路线和起点，终点
+				addMarker(start1,1);
+				addMarker(end1,0);
+                 drawLine(arr); //画线
+            });
+            
+            //实际路线
+            $("#real-line").click(function () {
+				//移除所有图形
+				Map.removeAllGraphics();
+				//移除所有标注
+				Map.removeAllMarker();
+				//重新绘制路线和起点，终点
+				addMarker(start2,2);
+				addMarker(end2,3);
+                drawBlueLine(arr2); //画线;
+            });
+            
+           //路线比较
+           $("#both-line").click(function () {
+				//移除所有图形
+				Map.removeAllGraphics();
+				//移除所有标注
+				Map.removeAllMarker();
+				//重新绘制路线和起点，终点
+				addMarker(start1,1);
+				addMarker(end1,0);
+				addMarker(start2,2);
+				addMarker(end2,3);
+				drawBlueLine(arr2); //画线
+                drawLine(arr); //画线
+				
+            });
+          
+            //清除路线
+            $("#clear-line").click(function () {
+				Map.removeAllGraphics();
+				Map.removeAllMarker();
+            });
+        };
+       this.init = function(){
+       	this.reSetLine();
+		this.initRightPart();
+       }
+       
+       this.init();
+	}
+	
+	carLine(200,window.data);
+	
+	
+</script>
+</html>

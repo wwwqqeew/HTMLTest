@@ -1,0 +1,235 @@
+<html lang="zh-CN">
+
+	<head>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+		<meta content="max-age=3600000" http-equiv="Cache-Control">
+		<meta content="240" name="MobileOptimized">
+		<meta content="YES" name="apple-touch-fullscreen">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta name="format-detection" content="telephone=no">
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" name="viewport">
+		<link type="image/x-icon" href="data:img/jpg;base64,AAABAAEAEhIAAAEAIACABQAAFgAAACgAAAASAAAAJAAAAAEAIAAAAAAAAAAAABMLAAATCwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANy1qx6cWkiahDkh5H4wFfSCNhrsikMo2JpdRam6j39S3ce/BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQ1uw1XcXnbZjD0TS6qqQluINuaJlRLdCHOA3/iDoP/4c4D/+FNg//mVk7xc6vojUAAAAAAAAAAAAAAAAAAAAAAAAAAKnf8EYEotX5AKPY/wOx5fU7yfOklN7zLAAAAADGlXZgnFId6JFDC/+TRxT/ijwM/4s/F/LQsqROAAAAAAAAAAAAAAAA5+z5Aq/j8SEltN/GAKrf/wCy5v8AtOv/Ab3z/EjW/5S/6/YG4MaxG7FvN7+YSQb/mU0T/5BCDf+SSR/25NLKIgAAAADx8foEXWDSt7e37kfZ+vsEPsXstgC06/8AvvL/AML3/wDA+P8cy/zWn+v/LwAAAAC/hU6nnU4D/5lMDf+dWCbn3MS3GOXUywOoq+RNEBfA/yMq1fLNy/c29P//Az7N9b0Avvf/AMP4/wDD+P8Awfj/CcX68Kfs/0QAAAAAw45XrplEAP/Jnnp50LCcP8+vnFdbX8uoFh3F/xUd1/8sNN3n4N36I+7//w0qzPnSAMD4/wDD+P8Aw/j/AMH4/wvE+fS99P87//fuB8OPWKvx5dgKt4JdnaltR7o0Ob/YHCPJ/x4m2f8SGtj/PkXf1fLt/A7Y+f4lEsb47QDB+P8Aw/j/AMP4/wDA+P8Wx/no0/f/JgAAAADu39AaoFgc8ZlRIOAkKbjrHybJ/x0l2P8dJdr/DxjY/1hd5LgAAAAAqO39UADB+P8Aw/j/AMP4/wDD+P8Avfj/e+H9fwAAAADWsYxmmUkC/5VJFewkKrbrICbG/x4l1v8dJdv/HSXa/w4W2P+BhOqKAAAAAGjc+5AAwPj/AMP4/wDA+P8/0vq89f3/Cff+/wTs3MwbpV0d8JRHEPE1OrfYHSS//x4m0f8dJdr/HSXa/xsj2v8UHNj/tLTyUfj//wEozfnRAL73/yLK+cLs+/8M4Pj+H0PU/Lfj9vgBvoZXoJlPG+liZcOnGB21/yAnyP8eJdb/HSXb/x0l2v8XH9n/KTHc7OXg+hu89P46PdH5sbDt/QvM9P4RMM75zgC++P+J6P9Z1qqLTK1xSLSlqNpLGR+r/yEnvv8fJsz/HiXX/x0l2/8eJtr/DRbX/1BW48T29f4CAAAAALLt/R0ky/nKAMD4/wDA9/8s0PzG1Me6JNq4o0Hn6PQEU1e6xBcdrv8hKMD/ICbK/xwk1P8UHNf/JCvb7ICF62kAAAAAAAAAAEPT+rMAvvf/AMDy/wC66/8AsuL/pt7rOQAAAAAAAAAA1NXsLS0xqvAYHq3/GR+5/yAnxflXXNqdsLPxFwAAAAByduBw2dX3Ja3v/UYAuOr/ALTi/wCs2P8Mq9LzwOr1LwAAAAAAAAAAAAAAALKz3Uc7P67BYmbGgpea3iWvsuYGh4vaWjxCyNANFL3/W17PuAAAAABRyeWpAKDM/wukyfCu4e1JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmpvRLlBUtJ8sMazsGB6q/x0irv8iKK//Fhuo/6il22DP8/YgObHOtJTV5DMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvb7hEXd4wVtSVLGrNDel1icqoOooK6DqMDOj1mZnuowAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4A8AA4AHAAMCAwACAAEAAABAAAAAIAAAAAAAAAAIAAAICAAABAAAAAAAAAAAAAAAAIAAAAGBAAICAQADAEMAA8AHAAPAPwAA="
+			rel="shortcut icon">
+
+		<title>高德地图测试</title>
+	</head>
+	<style>
+		html,
+		body,
+		div {
+			-webkit-user-select: none;
+			user-select: none;
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			-webkit-touch-callout: none;
+			-moz-user-select: none;
+			padding: 0px;
+			margin: 0px;
+		}
+		
+		body {
+			position: absolute;
+			top: 0;
+			right: 0;
+			left: 0;
+			bottom: 0;
+			padding: 0px;
+			margin: 0px;
+			background: #eeeeee;
+		}
+		
+		.rotate {
+			position: absolute;
+			bottom: 5px;
+			left: 5px;
+			width: 40px;
+			height: 40px;
+			text-align: center;
+			line-height: 40px;
+			background-color: #ff0000;
+			z-index: 10000000000000;
+			cursor: pointer;
+			color: #ffffff;
+		}
+		
+		.zoomout {
+			position: absolute;
+			bottom: 95px;
+			left: 5px;
+			width: 40px;
+			height: 40px;
+			text-align: center;
+			line-height: 40px;
+			background-color: #ff0000;
+			z-index: 10000000000000;
+			cursor: pointer;
+			color: #ffffff;
+		}
+		
+		.open {
+			position: absolute;
+			bottom: 140px;
+			left: 5px;
+			width: 40px;
+			height: 40px;
+			text-align: center;
+			line-height: 40px;
+			background-color: #ff0000;
+			z-index: 10000000000000;
+			cursor: pointer;
+			color: #ffffff;
+		}
+		
+		.zoomin {
+			position: absolute;
+			bottom: 50px;
+			left: 5px;
+			width: 40px;
+			height: 40px;
+			text-align: center;
+			line-height: 40px;
+			background-color: #ff0000;
+			z-index: 10000000000000;
+			cursor: pointer;
+			color: #ffffff;
+		}
+		
+		
+		#map {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	</style>
+
+	<body>
+		<div id="map">
+
+		</div>
+		<div style="position: absolute;cursor:pointer;right: 10px;	bottom: 10px;width: 180px;height: 120px;background: #00ff00;z-index: 100;">
+			<input type="checkbox" name="tileType1" value="3" />是否开启实时交通<br>
+			<input type="radio" name="tileType" value="0" checked="checked" />PC端<br>
+			<input type="radio" name="tileType" value="1" />移动端<br>
+			<input type="radio" name="tileType" value="2" />高德卫星<br>
+			<input type="radio" name="tileType" value="3" />谷歌卫星<br>
+			<input type="radio" name="tileType" value="4" />卫星<br>
+		</div>
+		<div class="rotate">旋转</div>
+		<div class="zoomout">放大</div>
+		<div class="zoomin">缩小</div>
+		<div class="open">作线</div>
+	</body>
+
+	<script src="jquery-1.9.0.js"></script>
+	<script src="RMap5-Data.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		var map = new RMap(document.getElementById("map"), 114.07928504687264, 22.53948778905773, 12, document.body.clientWidth, document.body.clientHeight, 0);
+		var g = new RCircle(114.07928504687264, 22.53948778905773, 300, RCircle.TYPE_MI, '#660000', 0.5, 1, '#666666', 0.5, 1);
+		var checkbox = document.getElementsByName("tileType1");
+		var isTrafficOn = false;
+		checkbox[0].onchange = function() {
+			if (isTrafficOn) {
+				map.removeLayer(RMapType.Traffic);
+				isTrafficOn = false;
+			} else {
+				map.addLayer(RMapType.Traffic);
+				isTrafficOn = true;
+			}
+		};
+		var radioGroup = document.getElementsByName("tileType");
+		var radioOnChange = function() {
+			for (var i = 0; i < radioGroup.length; i++) {
+				if (radioGroup[i].checked) {
+					var val = radioGroup[i].getAttribute('value');
+					switch (val) {
+						case "4":
+							map.resetLayer(RMapType.Satellite, RMapType.Satelliteroad);
+							break;
+						case "3":
+							map.resetLayer(RMapType.Satellitegg, RMapType.Satelliteroad);
+							break;
+						case "2":
+							map.resetLayer(RMapType.Satellitegd, RMapType.Satelliteroad);
+							break;
+						case "1":
+							map.resetLayer(RMapType.Mobile);
+							break;
+						default:
+							map.resetLayer(RMapType.Typical);
+							break;
+					}
+				}
+			}
+		}
+		for (var i = 0; i < radioGroup.length; i++) {
+			radioGroup[i].onchange = radioOnChange;
+		}
+		//刷新交通图层
+		setInterval(function() {
+			map.refreshLayer(RMapType.Traffic);
+		}, 3000);
+		//	var g = new RPolygon([{lng:113.234539,lat:23.138347},{lng:113.234539,lat:23.139347},{lng:113.238539,lat:23.138347}], '#666666', 0.5, 1, '#666666', 0.5, 1 );
+		map.show();
+		map.addGraphics(g);
+		var points = [];
+		var angle = 0;
+		var lls = [{
+			"lng": 114.08499598437264,
+			"lat": 22.53765966405773
+		}, {
+			"lng": 114.08438660937264,
+			"lat": 22.53753466405773
+		}, {
+			"lng": 114.08383973437265,
+			"lat": 22.53589403905773
+		}, {
+			"lng": 114.08346473437264,
+			"lat": 22.53480028905773
+		}, {
+			"lng": 114.08054285937264,
+			"lat": 22.53595653905773
+		}, {
+			"lng": 114.07987098437265,
+			"lat": 22.534612789057732
+		}, {
+			"lng": 114.08138660937264,
+			"lat": 22.53323778905773
+		}, {
+			"lng": 114.07782410937264,
+			"lat": 22.536128414057732
+		}];
+		var rotate = function() {
+			requestAnimationFrame(function() {
+				map.rotate(angle);
+				angle += 1;
+			})
+		}
+		var rotateInterval;
+		$(".rotate").click(function() {
+			if (rotateInterval) {
+				clearInterval(rotateInterval);
+				rotateInterval = null;
+			} else {
+				rotateInterval = setInterval(rotate, 2);
+			}
+		});
+		$(".zoomin").click(function() {
+			map.smoothLevel(map.getLevel() + 1);
+		});
+		$(".zoomout").click(function() {
+			map.smoothLevel(map.getLevel() - 1);
+		});
+		var destinationIndex = 0;
+		$(".open").click(function() {
+			if (destinationIndex + 1 == lls.length - 1) {
+				destinationIndex = 0;
+			} else {
+				destinationIndex++;
+			}
+			var c = new RCircle(lls[destinationIndex].lng, lls[destinationIndex].lat, 10, RCircle.TYPE_MI, '#000066', 1, 1, '#000066', 1, 1);
+			map.addGraphics(c);
+			map.smoothMap(lls[destinationIndex].lng, lls[destinationIndex].lat);
+		});
+	</script>
+
+</html>

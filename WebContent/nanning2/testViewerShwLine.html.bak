@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Search Test</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<script src="jquery-1.9.0.js" type="text/javascript"></script>
+<script src="RMap5.js" type="text/javascript"></script>
+<script src="data.js" type="text/javascript"></script>
+<script src="datatl.js" type="text/javascript"></script>
+<script src="dataTrun.js" type="text/javascript"></script>
+
+
+
+<style>
+html,body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: #F9F9F9;
+}
+
+.main {
+	height: 100%;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.title {
+	width: 100%;
+	height: 50px;
+}
+
+.inner-left {
+	bottom: 0;
+	position: absolute;
+	top: 50px;
+	width: 50%;
+	left: 0px;
+}
+
+.inner-right {
+	bottom: 0;
+	position: absolute;
+	top: 50px;
+	width: 50%;
+	right: 0px;
+}
+
+.inner-if {
+	height: 99%;
+	overflow: hidden;
+	position: absolute;
+	width: 100%;
+}
+
+.input-main {
+	height: 20px;
+	margin-left: 20px;
+	width: 480px;
+}
+
+.ch {
+	float: left;
+	width: 49%;
+	height: 100%;
+}
+
+.turn,.clear {
+	background-color: #3485fb;
+	background-repeat: no-repeat;
+	border: 0 none;
+	color: white;
+	cursor: pointer;
+	height: 32px;
+	padding: 0;
+	width: 106px;
+}
+
+.viceIframe {
+	display: none;
+}
+</style>
+</head>
+
+<body>
+	<div class='main' style='' id="mapdiv">
+	<table class='table'></table>
+	</div>
+
+	<script type="text/javascript">
+		(function($, exports) {
+			/*
+			
+			 	var data = datahcz;
+			 var getTrainstation = [];
+			var sd = "";
+			 for (var int = 0; int < data.length; int++) {
+			 var ontdata = {};
+			
+			 //ontdata.name = data[int]["properties"]["name"];
+			//ontdata.longitude = data[int]["properties"]["X"];
+			 //ontdata.latitude = data[int]["properties"]["Y"];
+			// getTrainstation.push(ontdata);
+			sd +="<tr>";
+			 sd +="<td>"+ data[int]["properties"]["Name"]+"</td>";
+			 sd +="<td>"+  data[int]["properties"]["X"]+"</td>";
+			 sd +="<td>"+  data[int]["properties"]["Y"]+"</td>";
+			 sd +="<td>"+  data[int]["properties"]["LineBelong"]+"</td>";
+			 sd +="</tr>";
+			 }
+			 //alert(JSON.stringify(getTrainstation));
+			 //$(".main").html(JSON.stringify(getTrainstation)); 
+			 $(".table").html(sd); 
+			*/
+			
+			 /*
+			var data = dataLine;
+			var getLandplanning = [];
+			var sd = "";
+			var dsds = "";
+			for (var int = 0; int < data.length; int++) {
+				var ontdata = {};
+				
+				ontdata.name = data[int]["properties"]["name"];
+				sd +="<tr>";
+				 sd +="<td>"+ data[int]["properties"]["name"]+"</td>";
+				
+				//ontdata.range = data[int]["range"];
+				var dataJwd = data[int]["geometry"]["coordinates"];
+				var getdata = [];
+				for (var intf = 0; intf < dataJwd.length; intf++) {
+					var ontdataVV = {};
+					ontdataVV.cx = dataJwd[intf][0];
+					ontdataVV.cy = dataJwd[intf][1];
+					//alert(""+data[int][0]+" : "+data[int][1]);
+					getdata.push(ontdataVV);
+				}
+				ontdata.range = getdata;
+				 sd +="<td>"+  JSON.stringify(getdata)+"</td>";
+				 sd +="</tr>";
+				 dsds += JSON.stringify(ontdata)+"<br>";
+				getLandplanning.push(ontdata);
+			}
+			//alert(JSON.stringify(getLandplanning));
+			//$(".main").html(JSON.stringify(getLandplanning));
+			$(".main").html(dsds);
+			//$(".table").html(sd); 
+			
+			*/
+			//输出传输---------------------------------------------------------------------------
+			/*
+			var data = dataLine;
+			var getLandplanning = [];
+			var sd = "";
+			var listpost = []
+			
+			for (var int = 0; int < 1; int++) {
+				var ontdata = {};
+				
+				ontdata.name = data[int]["properties"]["name"];
+				
+				//ontdata.range = data[int]["range"];
+				var dataJwd = data[int]["geometry"]["coordinates"];
+				
+				var getdata = [];
+				for (var intf = 0, ni = 1; intf < dataJwd.length; intf++,ni++) {
+					
+					if(ni == 200 || (intf +1) == dataJwd.length){
+						debugger;
+						ontdata.range = getdata;
+						listpost.push(ontdata);
+						$.ajax({
+							type : "POST",
+							url : "http://localhost:8098/tllinemanagement/addLine",
+							data : JSON.stringify(ontdata),
+							dataType : "jsonp",
+							contentType : 'application/json;charset=UTF-8',
+							success : $.proxy(function(obj) {
+								if (obj.success) {
+									alert(title+"成功！");
+									//this.closeIframe();
+								} else {
+									if(obj.data){
+										alert(obj.data);
+									}else{
+										alert(title+"失败！");
+									}
+									//this.checkDiv();
+								}
+							}, this),
+							error : function(msg) {
+								alert(msg.success);
+							}
+						});
+						getdata = [];
+						ni = 1;
+					}
+					
+					var ontdataVV = {};
+					ontdataVV.Cx = dataJwd[intf][0];
+					ontdataVV.Cy = dataJwd[intf][1];
+					//alert(""+data[int][0]+" : "+data[int][1]);
+					getdata.push(ontdataVV);
+				}
+				alert("完成："+ontdata.name);
+				ontdata.range = getdata;
+				// sd +="<td>"+  JSON.stringify(getdata)+"</td>";
+				 //sd +="</tr>";
+				//getLandplanning.push(ontdata);
+			}
+			//alert(JSON.stringify(getLandplanning));
+			//$(".main").html(JSON.stringify(getLandplanning));
+			//$(".main").html(JSON.stringify(getLandplanning));
+			$(".table").html(sd); 
+			
+			*/
+			
+			//输出传输---------------------------------------------------------------------------
+			
+			
+			//创建一个RMap对象
+			
+			window.map = new RMap(document.getElementById("mapdiv"), 116, 40,
+					8, $('#mapdiv').width(), $('#mapdiv').height());
+
+			var rmap = window.map;
+
+			//显示地图
+			rmap.show();
+
+			var dataPoi = dataTrain;
+
+			for (var intf = 0; intf < dataPoi.length; intf++) {
+				//新建一个标注
+				//var pointMarker = new RLabelMarker(dataPoi[intf]["longitude"], dataPoi[intf]["latitude"],dataPoi[intf]["name"], "./image/icon_0.png",-15, -30, 30, 30);
+				//将标注添加入 rmap对象
+				//rmap.addMarker(pointMarker);
+				var track = dataPoi[intf].track
+			}
+			//设置地图中心点
+			rmap.setCenter(dataPoi[0]["longitude"], dataPoi[0]["latitude"]);
+
+			
+			var dataTtl = dadTtl;
+
+			var getRandomColor = function(){
+  return '#'+Math.floor(Math.random()*16777215).toString(16);
+}
+
+			for (var intf = 0; intf < dataTtl.length; intf++) {
+				//创建一个图形
+				//alert(getRandomColor());
+			    var shape =  new RLine( dataTtl[intf]["range"], 3, getRandomColor(), 1 );
+				//将图形添加到地图
+				rmap.addGraphics(shape)
+			}
+			
+
+			
+		})(jQuery, window);
+	</script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title> 车辆状态 </title>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+		<script src="jquery-1.9.0.js"></script>
+		<script src="jQueryRotate.2.2.js" type="text/javascript"></script>
+		<script src="jquery.json.js" type="text/javascript"></script>
+		
+		<script src="RMap5.js" type="text/javascript"></script>
+		<style>
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+			
+			.locus_contain2 {
+				width: 100%;
+				height: 100%;
+			}
+			
+			#map {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+			}
+			
+			.playSchedule {
+				z-index: 99;
+				position: absolute;
+				bottom: 100px;
+				left: 50px;
+				width: 500px;
+			}
+			
+			.locusmap-his-button {
+				width: 100%;
+				background: black;
+				border: 0px;
+				cursor: pointer;
+				color: white;
+				font-size: 15px;
+				display: inline-block;
+				position: relative;
+				left: 5px;
+				height: 100%;
+				width: 90px;
+				line-height: 30px;
+				text-align: center;
+				border-radius: 5px;
+				margin-right: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="locus_contain2">
+			<div id='map'></div>
+		</div>
+
+	</body>
+
+	<script type="text/javascript">
+var data = {'a':'000','3':'ccc','1':'aaa','测试':'bbb',};
+var arr = [];
+var i = 0;
+for(var k in data){
+	var d = [];
+	d[0] = k;
+	d[1] =  data[k]
+	arr[i] = d;
+	i++;
+}
+
+
+
+var thing = {plugin: 'jquery-json', version: 2.3};    
+var encoded = $.toJSON( thing ); // '{"plugin":"jquery-json","version":2.3}' 
+
+alert(encoded);
+debugger;
+
+
+		var Map;
+		//31.17851958274933,121.40290013498204
+		//lat:28.570244,lng:115.925496
+		//"瑞图经纬度为"  lat:31.178979,lng:121.402605
+		//113.204092,22.999151
+		var numMapLat = 22.999151;
+		var numMapLng = 113.204092;
+		var intMapZoom = 10;
+
+		var getMapWidth = function() {
+			return $("#map").width();
+		};
+		var getMapHeight = function() {
+			return $("#map").height();
+		};
+		//初始化地图
+		function inintMainMap() {
+			RMapConstant.MapMinLevel = 0;
+			RMapConstant.MapMaxLevel = 12;
+
+			$("#map").empty();
+			Map = new RMap("map", numMapLng, numMapLat, intMapZoom, getMapWidth(), getMapHeight());
+			Map.setCenter(numMapLng, numMapLat);
+			Map.show();
+			ToolManager = new RToolManager(Map);
+			ToolManager.addScale(10, null, null, 23);
+			ToolManager.addZoomDirectBar($(window).width() - 80, 100);
+			$(window).resize(function() {
+				Map.resize(getMapWidth(), getMapHeight());
+				ToolManager.ZoomDirectBar.Div.set(getMapWidth() - 80, 100);
+			});
+		}
+		inintMainMap();
+		//测试数据
+		window.data = [{ "longitude": numMapLng, "latitude": numMapLat, "name": "江铃1号" ,"status":1,"id":1}];
+		var carStatus = function(markers) {
+			//画标注
+			this.addMarker = function(marker,marker2) {
+				var img = "";
+				var status = "";
+				if(marker.status == 0) {
+					img = "./img/visited_stops.png";
+					status = "停车中";
+				} else if(marker.status == 1) {
+					img = "./img/red.png";
+					status = "行驶中";
+				} else if(marker.status == 2) {
+					img = "./img/gray-car.png";
+					status = "已离线";
+				}
+				var wnd = {width:140,height:40,detaX: -5, detaY: -5,html: "<div style='padding:10px;text-align:center;font-size:14px'>"+marker.name+"，"+status+"</div>"}
+				this.marker = new RWindowMarker(marker.longitude, marker.latitude, wnd, img, -10, -10, 20, 20);
+				Map.addMarker(this.marker);
+			};
+			//添加标注
+			this.drawMark = function() {
+
+				for(var i = 0; i < markers.length; i++) {
+					if(i<=markers.length-1)
+					this.addMarker(markers[i],markers[i+1]);
+				}
+			};
+			//获取两点间的角度
+			this.getAngel = function(point1 , point2){
+				var diff_x = point2.longitude - point1.longitude,
+					diff_y = point2.latitude - point1.latitude;
+				//返回角度,不是弧度
+				var angle = 360*Math.atan(diff_y/diff_x)/(2*Math.PI);
+				if ((diff_x >= 0 && diff_y >= 0)||(diff_x >= 0 &&  diff_y <= 0)) {
+					//东北象限
+					angle = 90 - angle;
+				}else{
+					//西南象限
+					angle = 270 - angle;
+				}
+				return (parseInt(angle) == 0 ? 360:parseInt(angle));
+			}
+			this.init = function() {
+				this.drawMark();
+			}
+			this.init();
+		}
+		carStatus(data);
+	</script>
+
+</html>

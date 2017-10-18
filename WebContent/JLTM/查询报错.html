@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>查询报错 </title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="RMap5.js" type="text/javascript"></script>
+        <style>
+            html,body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .locus_contain2 {
+                width: 100%;
+                height: 100%;
+            }
+
+            #map {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+            }
+
+            .playSchedule {
+                padding: 20px;
+                z-index: 99;
+                position: absolute;
+                bottom: 100px;
+                left: 50px;
+                width: 350px;
+                background: #FFFFFF;
+                border: 2px;
+            }
+
+            .searchForm {
+                font-size: 14px;
+                z-index: 99;
+                position: absolute;
+                top: 20px;
+                left: 50px;
+                width: 350px;
+                border: 2px;
+            }
+
+            .search-input {
+                font-size: 16px;
+                margin-left: 0px;
+                height: 28px;
+            }
+
+            .search-input-text {
+			box-shadow: 3px 3px 3px #dbd9d7;  
+                padding-left: 5px;
+                position: relative;
+                margin-top: -10px;
+                width: 300px;
+                height: 28px;
+                border: 2px;
+            }
+
+            .result-content {
+			box-shadow: 3px 3px 3px #dbd9d7;  
+                width: 300px;
+                position: relative;
+                margin-top: 25px;
+                background: #FFFFFF;
+            }
+
+            .search-btn {
+			box-shadow: 3px 3px 3px #dbd9d7;  
+                position: relative;
+                width: 45px;
+                height: 32px;
+                bottom: -12px;
+                cursor: pointer;
+            }
+
+            .title {
+                font-size: 14px;
+                font-weight: bold;
+                padding-bottom: 20px;
+            }
+
+            .input-class {
+                margin-left: 20px;
+                border: 2px;
+            }
+
+            .input-style {
+                margin-left: 20px;
+                width: 230px;
+                height: 30px;
+            }
+
+            .locusmap-his-button {
+                margin-top: 10px;
+                width: 100%;
+                background: #3385ff;
+                border: 0px;
+                cursor: pointer;
+                color: white;
+                font-size: 15px;
+                display: inline-block;
+                position: relative;
+                left: 5px;
+                height: 100%;
+                width: 100px;
+                line-height: 30px;
+                text-align: center;
+                border-radius: 5px;
+                margin-right: 10px;
+            }
+
+            .li-style {
+                margin-left: -25px;
+                padding: 5px 0px;
+                height: 35px;
+                list-style-type: none;
+                vertical-align: middle;
+            }
+			.li-style2 {
+                margin-left: -25px;
+                padding: 5px 0px;
+                height: 35px;
+                list-style-type: none;
+                vertical-align: middle;
+            }
+            .li-style:hover {
+                cursor: pointer;
+                background-color: #F8F8F8;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="locus_contain2">
+            <div id='map'></div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        
+        
+        
+	//地图全局变量
+	var Map;
+	//中心点坐标
+    var numMapLat = 36.1294403488;
+    var numMapLng = 104.93040108459999;
+	//初始化地图缩放等级
+    var intMapZoom = 2;
+	//全局纠偏标注
+	var correctMarker;
+	var checkedMarkId = 0;//被选中标注标志
+	var correctCx;
+	var correctCy;
+	//纠偏前原始坐标
+	var poiLat,poiLng;
+    //地图长度
+    var getMapWidth = function () {
+        return $("#map").width();
+    };
+	//地图宽度
+    var getMapHeight = function () {
+        return $("#map").height();
+    };
+
+	//警告车辆数据
+	window.data = [];
+	//初始化地图
+	 function inintMainMap() {
+		RMapConstant.MapMinLevel = 1;//地图最小级别
+		RMapConstant.MapMaxLevel = 12;//地图最大级别
+
+		$("#map").empty();//清空地图
+		Map = new RMap("map", numMapLng, numMapLat, intMapZoom, getMapWidth(), getMapHeight());//实例化地图
+		Map.show();//显示地图
+		ToolManager = new RToolManager(Map);//地图工具
+		ToolManager.addScale(10, null, null, 23);
+		ToolManager.addZoomDirectBar($(window).width() - 80, 100);//添加地图缩放工具
+		$(window).resize(function () {
+			Map.resize(getMapWidth(), getMapHeight());
+			ToolManager.ZoomDirectBar.Div.set(getMapWidth() - 80, 100);
+		});
+		
+    }
+	inintMainMap();
+	//绘制搜索结果标注
+	function drawMarkerBySearch(marker) {
+			//标注的label
+			var wnd = {width:140,height:40,detaX: -5, detaY: -5,html: "<div id='"+marker.name+"'></div>"}//此处必须设置一个ID
+			//创建标注
+			this.marker = new RSelfMarker(marker.lng,marker.lat, wnd, "./img/begin-icon.png", -5, -24, 26, 32);
+			//往地图上添加标注
+			Map.addMarker(this.marker);
+			//暂时显示label
+			this.marker.showLabel();//必须要在此处显示
+			//根据设置的ID获取到标注图标
+			var img = document.getElementById(''+marker.name+'').parentNode.previousSibling;
+			//为标注设置数据值,以便点击事件能够获取数据
+			img.setAttribute("data-name",marker.name);
+			img.setAttribute("data-lat",marker.lat);
+			img.setAttribute("data-lng",marker.lng);
+			img.setAttribute("data-id",marker.id);
+			img.setAttribute("id",marker.id);
+			this.marker.hideLabel();//必须要在此处关闭
+			//标注点击事件
+			this.marker.runClickEvent=function(evt){
+			//点击标注后显示标注详细信息
+			   $("#name").val(evt.target.getAttribute("data-name"));
+			   $("#lat").val(evt.target.getAttribute("data-lat"));
+			   $("#lng").val(evt.target.getAttribute("data-lng"));
+			   $("#poiId").val(evt.target.getAttribute("data-id"));
+				//保存坐标，方便后面纠错的取消操作
+			   poiLat=evt.target.getAttribute("data-lat");
+			   poiLng=evt.target.getAttribute("data-lng");
+			   $(".result-content").hide();//隐藏搜索结果
+			   $(".playSchedule").show();//显示标注详情
+			   var flag = document.getElementById(checkedMarkId);//如果有标注被选中了
+			   if(flag!=null){
+				document.getElementById(checkedMarkId).setAttribute("src","./img/begin-icon.png");//移除被选中的状态
+			   }
+			   evt.target.setAttribute("src","./img/checked-icon.png");//设置新的被选中的标注
+			   if( evt.target.getAttribute("id")==null|| evt.target.getAttribute("id")==undefined|| evt.target.getAttribute("id")==""){
+				evt.target.setAttribute("src","./img/begin-icon.png");//
+			   }
+				checkedMarkId = evt.target.getAttribute("id");//
+
+			}
+        };
+	//纠错
+	var showWarnningMarker = function(marks){
+		
+	   //操作按钮
+        this.initRightPart = function () {//右边部分的html处理
+			//搜索界面
+			 $("body").append('<div class="searchForm">' 
+							+'<div class="search-input"><input class="search-input-text" type="text" id="keyword" placeholder="请输入要搜索的地点"/><img class="search-btn" src="./img/search.png"/></div>'
+							+'<div class="result-content"></div>'
+							+ '</div>'
+							+ '');
+			//POI详情界面
+            $("body").append('<div class="playSchedule" hidden>' 
+							+'<div class="title">提示：将地图放大拖拽地图选点纠错</div>'
+							+'<input type="hidden" id="poiId"/>'
+							+'<div class="input-class">名字：<input class="input-style" type="text" id="name"/></div><br>'
+							+'<div class="input-class">经度：<input class="input-style" type="text" id="lng"/></div><br>'
+							+'<div class="input-class">纬度：<input class="input-style" type="text" id="lat"/></div><br>'
+							+ '<div class="locusmap-his-button" id="correct">位置纠偏</div>'
+							+ '<div class="locusmap-his-button" id="cancel">取消</div>'
+							+ '<div class="locusmap-his-button" id="upload">位置保存</div>'
+							+ '</div>'
+							+ '');
+            this.initRightPartEven();
+           
+            this.Map = Map;
+         
+        },
+        this.initRightPartEven = function () {//初始化事件
+            this.rightPart_up(); //上部数据显示
+        };
+		//所有界面
+        this.rightPart_up = function () {
+        	var that = this;
+			
+			//搜索框输入监听事件
+			$('#keyword').bind('input propertychange', function() { 
+				$(".playSchedule").hide();//隐藏详情页面
+				$(".result-content").show();//显示搜索结果页面
+				var keyword = $("#keyword").val();//获取搜索的关键字
+				var url = "http://106.75.54.113:8061/JLTMService/service/POISearchService?query="+keyword;//请求路径
+				//请求搜索接口，使用的是jsonp的异域请求
+				$.ajax({
+			  　　type: "GET",    // 此处只能是get请求 post请求后端即使修改（method = RequestMethod.POST）了也不行
+			  　　async: false,
+			  　　url: url,
+			  　　dataType: "jsonp",
+			  　　jsonp: "action",
+			  　　success: function(json){
+					//如果返回成功，清空地图，重新绘制标注
+					if(json.success==true){
+					//	移除所有标注
+						Map.removeAllMarker();
+						//保存搜索结果
+						var html = "<ul style='overflow:auto;height:400px'  list-style-type='none'>";
+						var array = [];//保存坐标用于自动确定中心点和地图等级
+						for(var i = 0;i<json.data.length;i++){
+							var temp = {};
+							temp.Cx = json.data[i].lng;
+							temp.Cy = json.data[i].lat;
+							array.push(temp);
+							//绘制搜索结果标注
+							drawMarkerBySearch(json.data[i]);
+							
+							html+="<li class='li-style' data-id='"+json.data[i].id+"' data-name='"+json.data[i].name+"' data-lng='"+json.data[i].lng+"'  data-lat='"+json.data[i].lat+"'>"+json.data[i].name+"</li>";
+							html+="<ht/>";
+						}
+						html+="</ul>";
+						$('.result-content').html(html);//将搜索结果添加至搜索结果页面
+					}else{
+						//如果返回失败，返回友好提示页面
+						var html = "<ul   list-style-type='none'>";
+								html+="<li class='li-style2'>找不到你要查找的地址</li>";
+						html+="</ul>";
+						$('.result-content').html(html);
+					}
+					//为每一个搜索结果添加点击事件
+					$(".li-style").on("click",function(e){
+						var poi = e.target;
+						var temp = {};
+						//设置值
+						temp.name = poi.getAttribute("data-name");
+						temp.id  = poi.getAttribute("data-id");
+						temp.lat  = poi.getAttribute("data-lat");
+						temp.lng  = poi.getAttribute("data-lng");
+						//将选中的值显示在搜索框中
+						$(".search-input-text").val(temp.name);
+						//移除所有标注
+						Map.removeAllMarker();
+						//设置当前选中标注为中心点
+						Map.setCenter(temp.lng,temp.lat);
+						//绘制搜索结果标注
+						drawMarkerBySearch(temp);
+					})
+			  　　},
+			  　　error: function(){
+					///如果请求异常，返回友好提示页面
+				　　var html = "<ul   list-style-type='none'>";
+								html+="<li class='li-style'>找不到你要查找的地址</li>";
+						html+="</ul>";
+						$('.result-content').html(html);
+			  　　}
+			　　});
+			});  
+			//搜索按钮点击事件
+			$(".search-btn").click(function(){
+				$(".playSchedule").hide();//隐藏详情页面
+				$(".result-content").show();//显示搜索结果页面
+				var keyword = $("#keyword").val();
+				var url = "http://106.75.54.113:8061/JLTMService/service/POISearchService?query="+keyword;
+				$.ajax({
+			  　　type: "GET",    // 此处只能是get请求 post请求后端即使修改（method = RequestMethod.POST）了也不行
+			  　　async: false,
+			  　　url: url,
+			  　　dataType: "jsonp",
+			  　　jsonp: "action",
+			  　　success: function(json){
+					if(json.success==true){
+						Map.removeAllMarker();
+						var html = "<ul style='overflow:auto;height:400px'  list-style-type='none'>";
+						var array = [];//保存坐标用于自动确定中心点和地图等级
+						for(var i = 0;i<json.data.length;i++){
+							var temp = {};
+							temp.Cx = json.data[i].lng;
+							temp.Cy = json.data[i].lat;
+							array.push(temp);
+							//绘制搜索结果标注
+							drawMarkerBySearch(json.data[i]);
+							//addMarker(json.data[i].id,json.data[i].lng,json.data[i].lat,json.data[i].name);
+								html+="<li class='li-style' data-id='"+json.data[i].id+"' data-name='"+json.data[i].name+"' data-lng='"+json.data[i].lng+"'  data-lat='"+json.data[i].lat+"'>"+json.data[i].name+"</li>";
+								html+="<ht/>";
+						}
+						html+="</ul>";
+						$('.result-content').html(html);//将搜索结果添加至搜索结果页面
+						//如果有输入结果，自动设置中心点和地图等级
+						if(keyword!='')
+						 Map.setCenterMultiple(array);
+					}else{
+					///如果请求异常，返回友好提示页面
+						var html = "<ul   list-style-type='none'>";
+								html+="<li class='li-style'>找不到你要查找的地址</li>";
+						html+="</ul>";
+						$('.result-content').html(html);
+					}
+					//为每一个搜索结果添加点击事件
+					$(".li-style").on("click",function(e){
+						var poi = e.target;
+						var temp = {};
+						//设置值
+						temp.name = poi.getAttribute("data-name");
+						temp.id  = poi.getAttribute("data-id");
+						temp.lat  = poi.getAttribute("data-lat");
+						temp.lng  = poi.getAttribute("data-lng");
+						//将选中的值显示在搜索框中
+						$(".search-input-text").val(temp.name);
+						//移除所有标注
+						Map.removeAllMarker();
+						//设置当前选中标注为中心点
+						Map.setCenter(temp.lng,temp.lat);
+						//绘制搜索结果标注
+						drawMarkerBySearch(temp);
+					})
+			  　　},
+			  　　error: function(){
+			  ///如果请求异常，返回友好提示页面
+				　　var html = "<ul   list-style-type='none'>";
+								html+="<li class='li-style'>找不到你要查找的地址</li>";
+						html+="</ul>";
+						$('.result-content').html(html);
+			  　　}
+				});
+			})
+			//地图鼠标点击事件句柄
+		
+			var handler2 = function(){
+				var point = Map.getCenter();
+				$("#lat").val(point.Cy);
+				$("#lng").val(point.Cx);
+			}
+			var handler3 = function(){
+				var point = Map.getCenter();
+				$("#lat").val(point.Cy);
+				$("#lng").val(point.Cx);
+				//监听地图缩放时，使纠错标注位置不会偏移
+				//移除纠错图标
+				Map.removeMarker(correctMarker);
+				//添加新的纠错图标
+				correctMarker =  new RPointMarker(point.Cx, point.Cy, "./img/end-icon.png",-4, -20, 26,32);	//点击地图添加纠错图标并修改在详情界面
+				Map.addMarker(correctMarker);
+			}
+			toolManager= new RToolManager(Map);//地图工具
+           //点击报错事件
+            $("#correct").click(function () {
+				$("#correct").css("background","#e50101");
+				//添加中央准星
+				toolManager.addCross("./img/center.png",10,10);
+				//为地图添加鼠标按下，移动，松开事件
+				Map.addEventListener( RMapEvent.MouseDownEvent,handler2 );
+				Map.addEventListener( RMapEvent.LevelChanged,handler3 );
+				Map.addEventListener( RMapEvent.MouseMoveEvent,handler2 );
+				Map.addEventListener( RMapEvent.MouseUpEvent,handler3 );
+			});
+			//取消按钮事件
+			 $("#cancel").click(function () {
+				$("#correct").css("background","#3385ff");
+				//将变化的经纬度设为原始值
+				$("#lat").val(poiLat);
+				$("#lng").val(poiLng,poiLat);
+				Map.setCenter(poiLng,poiLat)
+				Map.removeMarker(correctMarker);
+				//为地图添加鼠标按下，移动，松开事件
+				Map.removeEventListener( RMapEvent.MouseDownEvent,handler2 );
+				Map.removeEventListener( RMapEvent.LevelChanged,handler3 );
+				Map.removeEventListener( RMapEvent.MouseMoveEvent,handler2 );
+				Map.removeEventListener( RMapEvent.MouseUpEvent,handler3 );
+				Map.refresh();
+            });
+			//位置保存按钮事件
+			$("#upload").click(function () {
+			$("#correct").css("background","#3385ff");
+			//将变化的经纬度设为原始值
+				Map.removeMarker(correctMarker);
+				Map.removeEventListener( RMapEvent.MouseDownEvent,handler2 );
+				Map.removeEventListener( RMapEvent.LevelChanged,handler3 );
+				Map.removeEventListener( RMapEvent.MouseMoveEvent,handler2 );
+				Map.removeEventListener( RMapEvent.MouseUpEvent,handler3 );
+				//获取详情面板中的数据
+				var id = $("#poiId").val();
+				var name =$("#name").val();
+				var lat = $("#lat").val();
+				var lng = $("#lng").val();
+				if(id==null||id==''||id=="undefined"){//如果ID不存在或者未定义,将ID赋值为-1告诉后台此次操作为添加操作
+					id=-1;
+				}
+				var url = "http://106.75.54.113:8061/JLTMService/service/POICorrectService?id="+id+"&name="+name+"&lat="+lat+"&lng="+lng;
+				 $.ajax({
+			  　　type: "GET",    // 此处只能是get请求 post请求后端即使修改（method = RequestMethod.POST）了也不行
+			  　　async: false,
+			  　　url: url,
+			  　　dataType: "jsonp",
+			  　　jsonp: "action",
+			  　　success: function(json){
+					alert(json.data);//请求成功提示
+			  　　},
+			  　　error: function(){
+				　　alert('上传失败！请确保上传数据为正确数据！');//失败提示
+			  　　}
+			　　}); 
+            });
+        };
+        this.init = function(){
+		this.initRightPart();
+       }
+       this.init();
+	}
+	showWarnningMarker(data);
+
+    </script>
+</html>

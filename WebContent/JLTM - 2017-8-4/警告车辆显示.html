@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> 警告车辆显示 </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<script src="jquery-1.9.0.js" type="text/javascript"></script>
+
+	<script src="RMap5.js" type="text/javascript"></script>
+	<style>
+	html,body{
+		width:100%;
+		height:100%;
+		margin:0;
+		padding:0;
+	}
+	.locus_contain2{
+		width: 100%;
+		height: 100%;
+	}
+
+	#map{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+	}
+	.playSchedule{
+		z-index: 99;
+		position: absolute;
+		bottom: 100px;
+		left: 50px;
+		width: 500px;
+	}
+	
+	.locusmap-his-button {
+		width: 100%;
+		background: black;
+		border: 0px;
+		cursor: pointer;
+		color: white;
+		font-size: 15px;
+		display: inline-block;
+		position: relative;
+		left: 5px;
+		height: 100%;
+		width: 150px;
+		line-height: 30px;
+		text-align: center;
+		border-radius: 5px;
+		margin-right: 10px;
+	}
+	</style>
+</head>
+
+<body>
+
+
+<div id="locus_contain2">
+	<div id='map'></div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+	var Map;
+    var numMapLat = 28.562890625;
+    var numMapLng = 115.917578125;
+    var intMapZoom = 10;
+    //地图长度
+    var getMapWidth = function () {
+        return $("#map").width();
+    };
+	//地图宽度
+    var getMapHeight = function () {
+        return $("#map").height();
+    };
+	//警告车辆数据
+	window.data = [
+	{ "longitude": 116.37653, "latitude": 40.0213, "name": "江铃A" ,"status":1,"id":1}
+					];
+					
+	//初始化地图
+	 function inintMainMap() {
+		RMapConstant.MapMinLevel = 0;
+		RMapConstant.MapMaxLevel = 12;
+
+		$("#map").empty();
+		Map = new RMap("map", numMapLng, numMapLat, intMapZoom, getMapWidth(), getMapHeight());
+		Map.show();
+		ToolManager = new RToolManager(Map);
+		ToolManager.addScale(10, null, null, 23);
+		ToolManager.addZoomDirectBar($(window).width() - 80, 100);
+		$(window).resize(function () {
+			Map.resize(getMapWidth(), getMapHeight());
+			ToolManager.ZoomDirectBar.Div.set(getMapWidth() - 80, 100);
+		});
+    }
+	inintMainMap();
+
+	//警告车辆显示
+	var showWarnningCar = function(marks){
+		//添加车辆标注
+        this.addMarker = function (lng, lat) {
+			this.marker = new RTabMarker(lng, lat, {html: "",detaX: 0,detaY: 0 }, "./img/red-car.png", -10, -7, 16,32);
+			Map.addMarker(this.marker);
+        };
+		this.addOtherMarker = function (lng, lat) {
+			this.marker = new RTabMarker(lng, lat, {html: "",detaX: 0,detaY: 0 }, "./img/green-car.png", -10, -7, 16,32);
+			Map.addMarker(this.marker);
+        };
+		//添加所有车警告车辆
+        this.drawMark = function(){
+			this.addOtherMarker(115.917578125,28.562890625);
+	       	for(var i = 0;i<marks.length;i++){
+	       		this.addMarker(marks[i].longitude,marks[i].latitude);
+	       	}
+       }
+	   //操作按钮
+        this.initRightPart = function () {//右边部分的html处理
+            $("body").append('<div class="playSchedule">' 
+           				 + '<div class="locusmap-his-button" id="show-car">显示所有警告车辆</div>'
+						 + '</div>'
+						 + '');
+            this.initRightPartEven();
+           
+            this.Map = Map;
+         
+        },
+        this.initRightPartEven = function () {//初始化事件
+            this.rightPart_up(); //上部数据显示
+        };
+        this.rightPart_up = function () {
+        	var that = this;
+           //显示警告车辆
+            $("#show-car").click(function () {
+			//自动设置中心点和地图等级，数据必须有Cx,Cy，参数为警告车辆的数组
+                Map.setCenterMultiple ([{ "Cx": 115.9184479596, "Cy": 28.6425262863},
+					{ "Cx": 115.9351122562, "Cy":28.6467333968},
+					{ "Cx": 115.9252228817, "Cy":28.6545926243}]);
+            });
+        };
+        this.init = function(){
+       	this.drawMark();
+		this.initRightPart();
+       }
+       this.init();
+	}
+	showWarnningCar(data);
+</script>
+</html>

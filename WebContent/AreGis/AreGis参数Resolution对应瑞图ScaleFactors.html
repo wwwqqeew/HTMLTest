@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title> 车辆状态 </title>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+		<script src="jquery-1.9.0.js"></script>
+		<script src="jQueryRotate.2.2.js" type="text/javascript"></script>
+		<script src="jquery.json.js" type="text/javascript"></script>
+		
+		<script src="RMap5.js" type="text/javascript"></script>
+		<style>
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+			
+			.locus_contain2 {
+				width: 100%;
+				height: 100%;
+			}
+			
+			#map {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+			}
+			
+			.playSchedule {
+				z-index: 99;
+				position: absolute;
+				bottom: 100px;
+				left: 50px;
+				width: 500px;
+			}
+			
+			.locusmap-his-button {
+				width: 100%;
+				background: black;
+				border: 0px;
+				cursor: pointer;
+				color: white;
+				font-size: 15px;
+				display: inline-block;
+				position: relative;
+				left: 5px;
+				height: 100%;
+				width: 90px;
+				line-height: 30px;
+				text-align: center;
+				border-radius: 5px;
+				margin-right: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="locus_contain2">
+			<div id='map'></div>
+		</div>
+
+	</body>
+
+	<script type="text/javascript">
+	var resolutionGis = new Array("156543.03392800014",
+	                  "78271.516963999937",
+	                  "39135.758482000092",
+	                  "19567.879240999919",
+	                  "9783.9396204999593",
+	                  "4891.9698102499797",
+	                  "2445.9849051249898",
+	                  "1222.9924525624949",
+	                  "611.49622628137968",
+	                  "305.74811314055756",
+	                  "152.87405657041106",
+	                  "76.437028285073239",
+	                  "38.21851414253662",
+	                  "19.10925707126831",
+	                  "9.5546285356341549",
+	                  "4.7773142679493699",
+	                  "2.3886571339746849",
+	                  "1.1943285668550503",
+	                  "0.59716428355981721",
+	                  "0.29858214164761665"
+	                  );
+	var ScaleFactors = new Array(
+			5.91657527591555E8,
+			2.95828763795777E8,
+			1.47914381897889E8,
+			7.3957190948944E7,
+			3.6978595474472E7,
+			1.8489297737236E7,
+			9244648.868618,
+			4622324.434309,
+			2311162.217155,
+			1155581.108577,
+			577790.554289,
+			288895.277144,
+			144447.638572,
+			72223.819286,
+			36111.909643,
+			18055.954822,
+			9027.977411,
+			4513.988705,
+			2256.994353,
+			1128.497176
+			);
+	var resolution = {};
+	var htm = "new Array(";
+	for(var i = 0 ; i < ScaleFactors.length ; i++){
+		var Rresolu = (ScaleFactors[i] * 360 * 0.0254) / (96 * 2 * Math.PI * 6378137);
+		resolution[i] = Rresolu * 256;
+		if(i != 0){
+			htm += ", ";
+		}
+		htm += Rresolu * 256;
+	}
+	htm += ")";
+	//alert(htm);
+	 debugger;
+	</script>
+
+</html>

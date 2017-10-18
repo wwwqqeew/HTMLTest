@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>监控系统</title>
+</head>
+<body>
+<video width="640" height="480" autoplay></video>
+<canvas width="640" height="480"></canvas>
+
+<script>
+    var video = document.querySelector('video');
+    var canvas = document.querySelector('canvas');
+
+		videoObj = { "video": true },
+		errBack = function(error) {
+			console.log("Video capture error: ", error.code); 
+		};
+
+	// Put video listeners into place
+	if(navigator.getUserMedia) { // Standard
+		navigator.getUserMedia(videoObj, function(stream) {
+			video.src = stream;
+			video.play();
+		}, errBack);
+	} else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+		navigator.webkitGetUserMedia(videoObj, function(stream){
+			video.src = window.webkitURL.createObjectURL(stream);
+			video.play();
+		}, errBack);
+	}
+	else if(navigator.mozGetUserMedia) { // Firefox-prefixed
+		navigator.mozGetUserMedia(videoObj, function(stream){
+			video.src = window.URL.createObjectURL(stream);
+			video.play();
+		}, errBack);
+	}
+
+    //canvas
+    var context = canvas.getContext('2d');
+
+    setTimeout(function(){
+        //把当前视频帧内容渲染到画布上
+        context.drawImage(video, 0, 0, 640, 480);
+    }, 5000);
+
+</script>
+</body>
+</html>

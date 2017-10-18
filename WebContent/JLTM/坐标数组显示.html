@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title> 车辆状态 </title>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+		<script src="jquery-1.9.0.js"></script>
+		<script src="jQueryRotate.2.2.js" type="text/javascript"></script>
+		<script src="RMap5.js" type="text/javascript"></script>
+		<style>
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+			
+			.locus_contain2 {
+				width: 100%;
+				height: 100%;
+			}
+			
+			#map {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+			}
+			
+			.playSchedule {
+				z-index: 99;
+				position: absolute;
+				bottom: 100px;
+				left: 50px;
+				width: 500px;
+			}
+			
+			.locusmap-his-button {
+				width: 100%;
+				background: black;
+				border: 0px;
+				cursor: pointer;
+				color: white;
+				font-size: 15px;
+				display: inline-block;
+				position: relative;
+				left: 5px;
+				height: 100%;
+				width: 90px;
+				line-height: 30px;
+				text-align: center;
+				border-radius: 5px;
+				margin-right: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="locus_contain2">
+			<div id='map'></div>
+		</div>
+
+	</body>
+
+	<script type="text/javascript">
+		var Map;
+		//31.17851958274933,121.40290013498204
+		//lat:28.570244,lng:115.925496
+		//"瑞图经纬度为"  lat:31.178979,lng:121.402605
+		var numMapLat = 22.760775;
+		var numMapLng = 113.273003;
+		var intMapZoom = 10;
+
+		var r = 1000;
+		var centR = r*(1E-5);
+		var latLngs =[];
+
+ for(var times=0; times<60; times++) {
+	  var poi = {};
+      var hudu = (2*Math.PI / 360) * 6 * times;
+      poi.Cy = numMapLat + Math.sin(hudu) * centR;
+      poi.Cx = numMapLng - Math.cos(hudu) * centR ;
+	  poi.name = times;
+	  latLngs[times] = poi;
+}
+
+
+
+		/* var latLngs = [
+		{name:"天佑城",Cy:	22.760538,Cx:	113.270533},
+		{name:"乐从天佑城",Cy:	22.947063,Cx:113.107731},
+		{name:"天佑城海洋馆",Cy:22.94706,Cx:113.107733},
+		{name:"天佑城(桂洲大道中)-公交车站",Cy:	22.761646,Cx:113.270893},
+		{name:"天佑城(乐购)-公交车站",Cy:22.759069,Cx:113.271448},
+		{name:"天佑城-1号门",Cy:	22.760341,Cx:	113.27162},
+		{name:"天佑城",Cy:	39.138298,Cx:	117.173057},
+		{name:"天佑城-2号门",Cy:	22.760931,Cx:113.27127},
+		{name:"天佑城-3号门",Cy:	22.761252,Cx:	113.27029},
+		{name:"天佑城-地下停车场",Cy:22.760972,Cx:	113.27092}
+		]; */
+
+		var getMapWidth = function() {
+			return $("#map").width();
+		};
+		var getMapHeight = function() {
+			return $("#map").height();
+		};
+		//初始化地图
+		function inintMainMap() {
+			RMapConstant.MapMinLevel = 0;
+			RMapConstant.MapMaxLevel = 12;
+
+			$("#map").empty();
+			Map = new RMap("map", numMapLng, numMapLat, intMapZoom, getMapWidth(), getMapHeight());
+			Map.setCenter(numMapLng, numMapLat);
+			showArrys();
+			Map.show();
+			
+		}
+		inintMainMap();
+
+		//画标注
+		function addMarker(marker) {
+			var img = "";
+			var status = "";
+				img = "./img/red.png";
+			var wnd = {width:140,height:40,detaX: -5, detaY: -5,html: "<div style='padding:10px;text-align:center;font-size:14px'>"+marker.name+"</div>"}
+			var markerOne = new RWindowMarker(marker.Cx, marker.Cy, wnd, img, -10, -10, 20, 20);
+			Map.addMarker(markerOne);
+		};
+		
+        function showArrys(){
+			for (var i = 0; i < latLngs.length; i++) {
+				addMarker(latLngs[i]);
+			}
+			Map.setCenterMultiple(latLngs);
+		};
+		
+		
+
+	</script>
+
+</html>

@@ -1,0 +1,378 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="jquery-1.9.0.js" type="text/javascript"></script>
+<title>Table测试</title>
+</head>
+<style>
+.divMain{
+	position: relative;width: 100%;
+	}
+.divTable{
+	margin-left: auto;
+margin-right: auto;
+width: 80%;
+	}
+.table{
+	border-collapse: collapse;
+border: 1px solid #ddd;
+width: 100%;
+max-width: 100%;
+}
+td {
+  border-color: rgb(221, 221, 221);
+  
+}
+tr:hover{
+	background-color:#f5f5f5;
+	}
+tr:nth-child(2n+1){
+		background-color:#f9f9f9;
+	}
+.input-fo {
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  color: #555;
+  display: block;
+  font-size: 14px;
+
+  padding: 6px 12px;
+  transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+  vertical-align: middle;
+
+}
+.input-fo:focus{
+	border-color: #66afe9;
+box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
+outline: 0 none;
+}
+
+.btn {
+  -moz-user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857;
+  margin-bottom: 0;
+  padding: 6px 12px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.btn-change {
+  background-color: #fff;
+  border-color: #ccc;
+  color: #333;
+}
+.btn-change:hover {
+  background-color: #e6e6e6;
+  border-color: #adadad;
+  color: #333;
+}
+.btn-change:active {
+background-image: none;
+box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125) inset;
+outline: 0 none;
+background-color: #e6e6e6;
+border-color: #adadad;
+color: #333;
+}
+.yuan {
+  background-color: yellow;
+  border-radius: 50%;
+  height: 50px;
+  line-height: 50px;
+  margin: 0 auto;
+  text-align: center;
+  width: 50px;
+}
+</style>
+<body>
+<div class="divMain">
+<div class="divTable">
+<table border="1"  class="table">
+</table>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+(function($, exports) {
+
+var dataget = [
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"hlglzx01","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2016/12/21 15:48:31","EndTime":"2017/1/21 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"恒流管理咨询（上海）有限公司","LoginCount":11293},{"UserID":"taima01","Password":null,"IP":"","IpBingding"
+:0,"CreateTime":"2016/12/21 9:21:21","EndTime":"2025/12/21 0:00:00","State":1,"Type":0,"ProjectId":0
+,"ProjectName":null,"Company":"江铃-钛马信息网络技术有限公司","LoginCount":8449},{"UserID":"szttx","Password":null
+,"IP":"","IpBingding":0,"CreateTime":"2015/9/10 15:53:42","EndTime":"2015/9/5 0:00:00","State":2,"Type"
+:0,"ProjectId":0,"ProjectName":null,"Company":"深圳通天星科技有限公司","LoginCount":71},{"UserID":"hbsyzt","Password"
+:null,"IP":"","IpBingding":0,"CreateTime":"2015/4/30 9:15:09","EndTime":"2020/12/31 0:00:00","State"
+:1,"Type":0,"ProjectId":0,"ProjectName":null,"Company":"好帮手易站通","LoginCount":22580},{"UserID":"nwkj001"
+,"Password":null,"IP":"","IpBingding":0,"CreateTime":"2015/4/24 9:54:30","EndTime":"2020/12/31 0:00:00"
+,"State":1,"Type":0,"ProjectId":0,"ProjectName":null,"Company":"纳瓦科技","LoginCount":4}],"Success":true
+,"ErrorMsg":null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"cltx001","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2014/12/17 12:28:27","EndTime":"2015/2/10 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"车联天下","LoginCount":63199},{"UserID":"hitachi_atm","Password":null,"IP":"","IpBingding":0
+,"CreateTime":"2014/11/11 15:58:08","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName"
+:null,"Company":"日立ATM","LoginCount":264},{"UserID":"libiao","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2014/11/7 9:26:59","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"李标","LoginCount":33554},{"UserID":"gzritu002","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2014/9/10 14:05:57","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"广州研发中心测试002","LoginCount":4},{"UserID":"ajyc001","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2014/7/30 12:42:50","EndTime":"2014/8/14 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"广州安捷远程信息科技有限公司","LoginCount":0}],"Success":true,"ErrorMsg":null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"gzritu001","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2014/5/13 11:05:10","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"广州研发测试帐号001","LoginCount":23720741},{"UserID":"gdclwf","Password":null,"IP":"","IpBingding"
+:0,"CreateTime":"2014/4/24 16:57:02","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0
+,"ProjectName":null,"Company":"广东畅联万方","LoginCount":495978},{"UserID":"yfkj","Password":null,"IP":""
+,"IpBingding":0,"CreateTime":"2014/3/14 17:25:53","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId"
+:0,"ProjectName":null,"Company":"远峰科技","LoginCount":0},{"UserID":"soueastmotor","Password":null,"IP"
+:"","IpBingding":0,"CreateTime":"2014/3/10 12:00:12","EndTime":"2020/12/31 0:00:00","State":1,"Type"
+:0,"ProjectId":0,"ProjectName":null,"Company":"东南汽车","LoginCount":10045910},{"UserID":"fjdx","Password"
+:null,"IP":"","IpBingding":0,"CreateTime":"2014/3/6 10:00:49","EndTime":"2020/12/31 0:00:00","State"
+:1,"Type":0,"ProjectId":0,"ProjectName":null,"Company":"福建电信","LoginCount":6440375}],"Success":true,"ErrorMsg"
+:null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"rituyunzhushou","Password":null,"IP":"","IpBingding"
+:0,"CreateTime":"2013/12/16 10:33:38","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0
+,"ProjectName":null,"Company":"道道通云助手测试","LoginCount":1},{"UserID":"tsp","Password":null,"IP":"","IpBingding"
+:0,"CreateTime":"2013/12/16 10:30:39","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0
+,"ProjectName":null,"Company":"TSP平台测试账号","LoginCount":3352},{"UserID":"ypj","Password":null,"IP":""
+,"IpBingding":0,"CreateTime":"2013/12/13 10:31:48","EndTime":"2020/12/31 0:00:00","State":2,"Type":0
+,"ProjectId":0,"ProjectName":null,"Company":"易普集信息科技有限公司","LoginCount":1},{"UserID":"vcyber","Password"
+:null,"IP":"","IpBingding":0,"CreateTime":"2013/12/10 11:01:56","EndTime":"2014/1/10 0:00:00","State"
+:2,"Type":0,"ProjectId":0,"ProjectName":null,"Company":"深圳市车音网科技有限公司","LoginCount":13},{"UserID":"njruidi"
+,"Password":null,"IP":"","IpBingding":0,"CreateTime":"2013/12/9 17:52:32","EndTime":"2020/12/31 0:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null,"Company":"南京锐俤","LoginCount":5}],"Success"
+:true,"ErrorMsg":null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"szjingyi","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2013/12/9 13:34:48","EndTime":"2014/1/9 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"深圳警翼","LoginCount":7208},{"UserID":"aa","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2013/12/2 14:51:03","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"测试账号是否可用","LoginCount":125},{"UserID":"yz01","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2013/8/1 10:47:27","EndTime":"2014/2/1 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"艺展电子","LoginCount":2},{"UserID":"tcl2013","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2013/6/27 16:35:41","EndTime":"2013/12/24 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"TCL股份集团_技术中心","LoginCount":422849},{"UserID":"acxs-jingan","Password":null,"IP":"","IpBingding"
+:0,"CreateTime":"2013/4/9 15:30:47","EndTime":"2013/7/1 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName"
+:null,"Company":"广东粤京安移动资讯有限公司","LoginCount":41}],"Success":true,"ErrorMsg":null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"dnavi","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2013/2/17 14:12:16","EndTime":"2020/2/17 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"深圳丹维软件","LoginCount":63979},{"UserID":"shiyang","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2012/12/17 13:50:14","EndTime":"2013/3/20 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"广州世扬信息科技有限公司","LoginCount":57624},{"UserID":"qirui","Password":null,"IP":"","IpBingding"
+:0,"CreateTime":"2012/12/7 15:16:29","EndTime":"2020/1/1 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName"
+:null,"Company":"奇瑞","LoginCount":0},{"UserID":"hzsz863","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2012/11/30 16:11:37","EndTime":"2020/1/1 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"合众思壮","LoginCount":7},{"UserID":"clwf","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2012/11/13 11:35:21","EndTime":"2020/1/1 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"畅联万方","LoginCount":13698}],"Success":true,"ErrorMsg":null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"szjtj","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2012/11/2 9:09:02","EndTime":"2015/12/30 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"京泰基","LoginCount":127636},{"UserID":"klskj","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2012/11/2 9:05:08","EndTime":"2020/1/1 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"凯伦圣科技","LoginCount":2},{"UserID":"T_gzritu","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2012/10/26 9:53:49","EndTime":"2020/10/10 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"广州研发测试帐号","LoginCount":129199},{"UserID":"chenghaofeng","Password":null,"IP":"","IpBingding"
+:0,"CreateTime":"2012/8/10 11:32:26","EndTime":"2015/8/8 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName"
+:null,"Company":"好帮手测试帐号","LoginCount":2687},{"UserID":"jkb","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2012/8/6 14:53:03","EndTime":"2020/1/1 0:00:00","State":0,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"广州融讯（内部监控帐号）","LoginCount":3671910}],"Success":true,"ErrorMsg":null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"bjchangdi","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2012/8/1 10:43:56","EndTime":"2020/10/10 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"北京长地","LoginCount":13},{"UserID":"HDSC","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2012/6/12 15:16:37","EndTime":"2012/7/31 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"汇德思创","LoginCount":24718555},{"UserID":"shwc","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2012/2/20 17:25:16","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"上海网程1","LoginCount":3487},{"UserID":"shanghaihuancai2011","Password":null,"IP":"","IpBingding"
+:0,"CreateTime":"2011/9/16 17:54:14","EndTime":"2011/10/16 0:00:00","State":2,"Type":0,"ProjectId":0
+,"ProjectName":null,"Company":"上海寰彩网络科技公司","LoginCount":13},{"UserID":"huicheng","Password":null,"IP"
+:"","IpBingding":0,"CreateTime":"2011/5/24 9:23:27","EndTime":"2020/12/31 0:00:00","State":0,"Type":0
+,"ProjectId":0,"ProjectName":null,"Company":"瑞图慧城2","LoginCount":129698}],"Success":true,"ErrorMsg":null
+},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"bjrtrj","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2011/5/23 14:27:58","EndTime":"2011/8/23 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"北京瑞图软件","LoginCount":15},{"UserID":"testhbs","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2011/5/19 11:08:26","EndTime":"2020/12/31 0:00:00","State":0,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"测试好帮手常用融讯接口","LoginCount":4510},{"UserID":"hbsdz2011","Password":null,"IP":"","IpBingding"
+:0,"CreateTime":"2011/4/21 17:21:29","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0
+,"ProjectName":null,"Company":"好帮手电子科技公司","LoginCount":50581603},{"UserID":"sstc2011","Password":null
+,"IP":"","IpBingding":0,"CreateTime":"2011/4/14 9:16:38","EndTime":"2020/12/31 0:00:00","State":2,"Type"
+:0,"ProjectId":0,"ProjectName":null,"Company":"石家庒盛世天成公司","LoginCount":9},{"UserID":"yy2011","Password"
+:null,"IP":"","IpBingding":0,"CreateTime":"2011/4/8 9:09:21","EndTime":"2020/12/31 0:00:00","State":2
+,"Type":0,"ProjectId":0,"ProjectName":null,"Company":"云域公司","LoginCount":4}],"Success":true,"ErrorMsg"
+:null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"hbs2011","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2011/3/4 15:29:06","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"好帮手电子科技","LoginCount":271115},{"UserID":"szyw","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2011/3/1 9:54:06","EndTime":"2011/6/1 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"深圳有为","LoginCount":173},{"UserID":"ytyl","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2011/2/18 11:52:49","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"北京云图永联科技","LoginCount":74969},{"UserID":"ritu_huicheng","Password":null,"IP":"","IpBingding"
+:0,"CreateTime":"2011/2/16 14:51:54","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0
+,"ProjectName":null,"Company":"瑞图慧城","LoginCount":13043910},{"UserID":"msd","Password":null,"IP":"","IpBingding"
+:0,"CreateTime":"2011/1/7 10:46:53","EndTime":"2011/1/25 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName"
+:null,"Company":"美赛达","LoginCount":7932}],"Success":true,"ErrorMsg":null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"rtrjzx","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/12/9 17:14:07","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"北京瑞图软件中心","LoginCount":112},{"UserID":"sdcd","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/12/2 15:47:50","EndTime":"2011/3/2 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"顺德长地","LoginCount":12},{"UserID":"bjyt","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/11/30 15:35:39","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName"
+:null,"Company":"北京云图","LoginCount":1822757},{"UserID":"jnynt","Password":null,"IP":"","IpBingding":0
+,"CreateTime":"2010/10/21 12:03:41","EndTime":"2011/1/21 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName"
+:null,"Company":"济南优耐特","LoginCount":364920},{"UserID":"kckj","Password":null,"IP":"","IpBingding":0
+,"CreateTime":"2010/9/30 14:15:42","EndTime":"2011/9/30 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName"
+:null,"Company":"勘测研究院","LoginCount":0}],"Success":true,"ErrorMsg":null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"jima","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/9/28 10:19:22","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"广州吉玛","LoginCount":0},{"UserID":"huayang","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/9/25 16:41:48","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"华阳","LoginCount":23836737},{"UserID":"95190","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/9/14 17:37:53","EndTime":"2011/3/21 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"95190","LoginCount":1272813},{"UserID":"bjcd","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/9/8 16:08:56","EndTime":"2011/3/30 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"北京长地","LoginCount":0},{"UserID":"szhq","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/9/3 15:53:16","EndTime":"2010/12/3 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"深圳华强","LoginCount":19}],"Success":true,"ErrorMsg":null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"yiqiqiming","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/8/27 14:52:55","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"一汽启明","LoginCount":90},{"UserID":"jinsanli","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/8/24 17:02:13","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"金三立","LoginCount":819892},{"UserID":"wuliuxiehui","Password":null,"IP":"","IpBingding":0
+,"CreateTime":"2010/8/24 14:51:44","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName"
+:null,"Company":"物流协会","LoginCount":0},{"UserID":"lipudun","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/8/24 9:14:54","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"丽普顿","LoginCount":10},{"UserID":"hbs","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/8/19 10:07:56","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"好帮手","LoginCount":799}],"Success":true,"ErrorMsg":null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"bedz","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/8/16 9:51:32","EndTime":"2011/8/16 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"贝尔电子","LoginCount":18},{"UserID":"fad","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/7/26 15:41:10","EndTime":"2011/8/15 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"河南富安达","LoginCount":4587582},{"UserID":"wtdh","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/7/26 14:52:42","EndTime":"2010/11/26 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"万通大和","LoginCount":4097},{"UserID":"jxtong0723","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/7/23 9:31:02","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"捷行通","LoginCount":13192},{"UserID":"yhao0723","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/7/23 9:20:34","EndTime":"2011/1/1 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"友浩","LoginCount":241}],"Success":true,"ErrorMsg":null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"hnkj","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/7/22 15:12:03","EndTime":"2010/11/22 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"安徽汇能信息","LoginCount":30},{"UserID":"xyhl","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/7/20 17:36:20","EndTime":"2010/11/20 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"北京远特","LoginCount":33192711},{"UserID":"test_data","Password":null,"IP":"","IpBingding":0
+,"CreateTime":"2010/7/20 16:25:18","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName"
+:null,"Company":"数据部测试","LoginCount":10},{"UserID":"szjxt","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/7/13 18:02:53","EndTime":"2010/8/13 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"万通大和","LoginCount":20},{"UserID":"thinkrace","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/7/12 17:06:05","EndTime":"2011/10/20 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"thinkrace","LoginCount":112687001}],"Success":true,"ErrorMsg":null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"ruishitong","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/7/8 14:00:11","EndTime":"2010/8/8 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"瑞世通","LoginCount":22},{"UserID":"guangzhouguangye","Password":null,"IP":"","IpBingding":0
+,"CreateTime":"2010/7/2 10:54:13","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName"
+:null,"Company":"广州广业","LoginCount":1283322432},{"UserID":"youhao","Password":null,"IP":"","IpBingding"
+:0,"CreateTime":"2010/6/29 16:55:27","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0
+,"ProjectName":null,"Company":"深圳浩科电子","LoginCount":916256},{"UserID":"wangcheng","Password":null,"IP"
+:"","IpBingding":0,"CreateTime":"2010/6/29 16:52:40","EndTime":"2020/12/31 0:00:00","State":2,"Type"
+:0,"ProjectId":0,"ProjectName":null,"Company":"上海网程","LoginCount":2},{"UserID":"changlianwanfang","Password"
+:null,"IP":"","IpBingding":0,"CreateTime":"2010/6/29 11:32:02","EndTime":"2020/12/31 0:00:00","State"
+:1,"Type":0,"ProjectId":0,"ProjectName":null,"Company":"畅联万方","LoginCount":18007}],"Success":true,"ErrorMsg"
+:null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"fuanda","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/6/28 10:14:15","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"河北富安达","LoginCount":9},{"UserID":"guangzhoutupai","Password":null,"IP":"","IpBingding":0
+,"CreateTime":"2010/6/11 10:17:58","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName"
+:null,"Company":"广州图派","LoginCount":0},{"UserID":"zhongsida","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/6/11 9:30:07","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"众思达","LoginCount":2140077},{"UserID":"guwokeji","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/6/11 9:26:54","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"谷沃科技","LoginCount":103},{"UserID":"shanghaihuancai","Password":null,"IP":"","IpBingding"
+:0,"CreateTime":"2010/5/19 17:09:45","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0
+,"ProjectName":null,"Company":"","LoginCount":1}],"Success":true,"ErrorMsg":null},
+{"PageSize":5,"TotalCount":90,"Data":[{"UserID":"jieyilian","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/5/17 9:18:24","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"捷易联","LoginCount":22951},{"UserID":"gouhaowang","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/5/14 9:13:50","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"","LoginCount":262},{"UserID":"kabeis","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/5/6 9:50:48","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"","LoginCount":345},{"UserID":"shanhai","Password":null,"IP":"","IpBingding":0,"CreateTime"
+:"2010/4/13 11:13:07","EndTime":"2020/12/31 0:00:00","State":2,"Type":0,"ProjectId":0,"ProjectName":null
+,"Company":"北京山海础石信息技术有限公司","LoginCount":370},{"UserID":"test","Password":null,"IP":"","IpBingding":0
+,"CreateTime":"2010/4/8 17:29:16","EndTime":"2020/12/31 0:00:00","State":1,"Type":0,"ProjectId":0,"ProjectName"
+:null,"Company":"广东融讯信息技术有限公司","LoginCount":245164153}],"Success":true,"ErrorMsg":null}
+];
+
+
+function getTdReturn( name ){
+	return "<td>"+name+"</td>"
+};
+
+function getState( name ){
+	if(name == "1"){
+		return "在用";
+	}else if(name == "2"){
+		return "禁止";
+	}else{
+		return "其他";
+	}
+};
+
+for (var i=0; i < dataget.length; i++) {
+	var dataOne = dataget[i].Data;
+  for (var idata=0; idata < dataOne.length; idata++) {
+    var html = "<tr>";
+    html += getTdReturn(dataOne[idata].Company);
+	 html += getTdReturn("不详");
+    html += getTdReturn(dataOne[idata].CreateTime);
+	html += getTdReturn(getState(dataOne[idata].State));
+    html += getTdReturn(dataOne[idata].LoginCount);
+	html += getTdReturn(dataOne[idata].EndTime);
+    html +="</tr>";
+    $(".table").append(html);
+  };
+};
+
+
+
+//alert(bb.PageSize);
+
+		function getData (data){
+		$.ajax({
+		    url:'http://api.365ditu.mobi/apiusermanage/Handler/UserHandler.aspx',
+		    type:'GET', //GET
+		    async:true,    //或false,是否异步
+		    data:{
+		        action:"getusers",
+				ran:"0.7824359254856625",
+				page:data
+		    },
+		    timeout:5000,    //超时时间
+		    dataType: 'jsonp',   
+		     contentType: "application/json; charset=utf-8",  
+		    success:function(result){
+				alert(222);
+		    },
+		    error:function(XMLHttpRequest, textStatus, errorThrown){
+				debugger;
+		    }
+		})
+	};
+
+for (var i=0; i < 18; i++) {
+  //getData(i);
+};
+	
+			})(jQuery, window);
+	</script>
+</html>

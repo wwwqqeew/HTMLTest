@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>监控系统</title>
+	<script src="lb/jq.js"  type="text/javascript"></script>
+</head>
+<body>
+<video width="640" height="480" autoplay></video>
+
+<script>
+ window.addEventListener("DOMContentLoaded", function() {
+    var video = document.querySelector('video');
+
+		videoObj = { "video": true },
+		errBack = function(error) {
+			console.log("Video capture error: ", error.code); 
+		};
+
+	// Put video listeners into place
+	if(navigator.getUserMedia) { // Standard
+		navigator.getUserMedia(videoObj, function(stream) {
+			video.src = stream;
+			video.play();
+		}, errBack);
+	} else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+		navigator.webkitGetUserMedia(videoObj, function(stream){
+			video.src = window.webkitURL.createObjectURL(stream);
+			video.play();
+		}, errBack);
+	}
+	else if(navigator.mozGetUserMedia) { // Firefox-prefixed
+		navigator.mozGetUserMedia(videoObj, function(stream){
+			video.src = window.URL.createObjectURL(stream);
+			video.play();
+		}, errBack);
+	}
+}, false);
+</script>
+</body>
+</html>
